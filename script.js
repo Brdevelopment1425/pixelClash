@@ -1,7 +1,7 @@
-// Yüklenme ekranını gizleme fonksiyonu
-function hideLoadingScreen() {
+// Yüklenme ekranını gizleme fonksiyonu (id: loader)
+function hideLoader() {
   const loader = document.getElementById('loader');
-  if (!loadingScreen) return;
+  if (!loader) return;
 
   loader.style.transition = 'opacity 0.5s ease';
   loader.style.opacity = '0';
@@ -11,10 +11,11 @@ function hideLoadingScreen() {
   }, 500);
 }
 
-// Sayfa tamamen yüklendiğinde yüklenme ekranını gizle
+// Sayfa tamamen yüklendiğinde loader'ı gizle
 window.addEventListener('load', () => {
-  hideLoadingScreen();
+  hideLoader();
 });
+
 
 // Gelişmiş kötü kelime filtresi (Türkçe + İngilizce + yaygın hakaret/spam)
 const badWords = [
