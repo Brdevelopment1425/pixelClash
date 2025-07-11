@@ -1,63 +1,48 @@
-/* style.css - Pixel Clash Admin Giriş & Sayfa Tasarımı */
+/* style.css */
 
-/* Genel Reset */
+/* Genel reset */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #ddd;
+  background-color: #121212;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #121212;
-  color: #eee;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  line-height: 1.5;
 }
 
-/* Loader */
-#loader {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #121212;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.spinner {
-  border: 6px solid #eee;
-  border-top: 6px solid #3498db;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Navbar */
-.navbar {
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
   background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #000a;
+  animation: fadeIn 1s ease forwards;
+}
+
+/* Menü */
+
+.navbar {
+  background-color: #181818;
+  padding: 12px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  box-shadow: 0 2px 8px #0006;
 }
 
 .logo {
-  font-weight: 900;
-  font-size: 1.8rem;
+  font-weight: 700;
+  font-size: 1.6rem;
   color: #3498db;
   user-select: none;
 }
@@ -65,419 +50,256 @@ body {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 1.8rem;
+  align-items: center;
+  gap: 24px;
 }
 
 .nav-links li a {
   text-decoration: none;
-  color: #eee;
+  color: #ddd;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
-.nav-links li a:hover,
-.nav-links li a:focus {
+.nav-links li a:hover {
   color: #3498db;
-  outline: none;
 }
 
-/* User Area */
-#user-area {
-  position: relative;
-}
+/* Hamburger menu (mobil) */
 
-#login-btn {
-  background-color: #3498db;
-  border: none;
-  padding: 0.5rem 1.4rem;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-  user-select: none;
-}
-
-#login-btn:hover,
-#login-btn:focus {
-  background-color: #2980b9;
-  outline: none;
-}
-
-#user-menu {
-  position: absolute;
-  right: 0;
-  top: 48px;
-  background-color: #222;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.7);
-  padding: 1rem;
-  width: 200px;
-  user-select: none;
-  animation: fadeInDown 0.3s ease forwards;
-  z-index: 1100;
-}
-
-#user-menu.hidden {
+#menu-toggle {
   display: none;
 }
 
-#user-menu img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: block;
-  margin: 0 auto 0.5rem auto;
+.hamburger {
+  font-size: 2rem;
+  color: #3498db;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    background-color: #181818;
+    height: calc(100% - 60px);
+    width: 200px;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  #menu-toggle:checked + .hamburger + .nav-links {
+    transform: translateX(0);
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Profil menüsü */
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
   user-select: none;
 }
 
-#user-menu #user-email {
-  display: block;
-  text-align: center;
-  font-weight: 700;
-  color: #3498db;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-  user-select: text;
+.profile img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3498db;
 }
 
-#user-menu ul {
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  top: 36px;
+  right: 0;
+  background-color: #222;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px #000a;
+  padding: 10px 0;
+  min-width: 140px;
+  z-index: 1500;
+  flex-direction: column;
+}
+
+.profile-dropdown li {
   list-style: none;
-}
-
-#user-menu ul li a {
-  color: #eee;
-  text-decoration: none;
-  display: block;
-  padding: 0.4rem 0.5rem;
-  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #ddd;
   font-weight: 600;
   transition: background-color 0.2s ease;
 }
 
-#user-menu ul li a:hover,
-#user-menu ul li a:focus {
+.profile-dropdown li:hover {
   background-color: #3498db;
-  outline: none;
-}
-
-/* FadeIn Animation */
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Modal */
-.modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(18, 18, 18, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1200;
-  user-select: none;
-}
-
-.modal.hidden {
-  display: none;
-}
-
-.modal-content {
-  background-color: #1f1f1f;
-  padding: 2rem 2.5rem;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 0 20px rgba(0,0,0,0.8);
-  color: #eee;
-  user-select: text;
-}
-
-.modal-content h2 {
-  margin-bottom: 1.5rem;
-  text-align: center;
-  font-weight: 900;
-  color: #3498db;
-}
-
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.modal-content input[type="email"],
-.modal-content input[type="text"],
-.modal-content textarea {
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  font-weight: 600;
   color: #121212;
 }
 
-.modal-content button {
-  background-color: #3498db;
-  border: none;
-  padding: 0.75rem 0;
-  border-radius: 6px;
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  user-select: none;
+.profile:hover .profile-dropdown {
+  display: flex;
 }
 
-.modal-content button:hover,
-.modal-content button:focus {
-  background-color: #2980b9;
-  outline: none;
-}
+/* Harita ve zoom */
 
-#close-login {
-  margin-top: 0.5rem;
-  background-color: transparent;
-  border: 2px solid #3498db;
-  color: #3498db;
-  font-weight: 700;
-}
-
-#close-login:hover,
-#close-login:focus {
-  background-color: #3498db;
-  color: white;
-  outline: none;
-}
-
-#login-message {
-  margin-top: 0.5rem;
-  font-weight: 700;
-  text-align: center;
-  color: #f39c12;
-  min-height: 1.5rem;
-}
-
-/* Main Content */
-main {
-  flex-grow: 1;
-  padding: 2rem 2rem 3rem 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-  user-select: text;
-}
-
-.section-container {
-  margin-bottom: 3rem;
-  background-color: #1e1e1e;
-  border-radius: 12px;
-  padding: 1.8rem 2rem 2.4rem 2rem;
-  box-shadow: 0 0 15px rgba(52,152,219,0.2);
-  animation: fadeInUp 0.6s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-h1, h2 {
-  color: #3498db;
-  font-weight: 900;
-  margin-bottom: 1rem;
-  user-select: text;
-}
-
-/* Map Section */
 .map-container {
+  position: relative;
   overflow: hidden;
   border-radius: 12px;
-  border: 2px solid #3498db;
+  box-shadow: 0 0 15px #0009;
   max-width: 100%;
-  max-height: 400px;
-  position: relative;
-  user-select: none;
 }
 
-#country-img {
+.map-container img {
   width: 100%;
-  height: auto;
+  max-width: 100%;
   transition: transform 0.3s ease;
-  cursor: grab;
   user-select: none;
+  pointer-events: none;
 }
 
-/* Zoom Controls */
 .zoom-controls {
-  margin-top: 1rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   display: flex;
-  gap: 0.75rem;
-  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .zoom-controls button {
   background-color: #3498db;
   border: none;
-  padding: 0.45rem 1.1rem;
-  border-radius: 8px;
-  color: white;
-  font-weight: 900;
-  font-size: 1.2rem;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 700;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
 }
 
-.zoom-controls button:hover,
-.zoom-controls button:focus {
+.zoom-controls button:hover {
   background-color: #2980b9;
-  outline: none;
 }
 
-/* Forms (Comments & Suggestions) */
+/* Formlar */
+
 form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 12px;
 }
 
-input[type="text"],
-textarea {
-  padding: 0.8rem 1rem;
+form input[type="text"],
+form textarea {
+  padding: 12px;
   border-radius: 8px;
   border: none;
+  resize: none;
   font-size: 1rem;
-  font-weight: 600;
-  resize: vertical;
-  min-height: 40px;
-  color: #121212;
+  background-color: #2c2c2c;
+  color: #ddd;
+  transition: box-shadow 0.3s ease;
 }
 
-textarea {
-  min-height: 80px;
+form input[type="text"]:focus,
+form textarea:focus {
+  outline: none;
+  box-shadow: 0 0 8px #3498db;
 }
 
-button[type="submit"] {
+form button {
+  width: max-content;
   background-color: #3498db;
   border: none;
-  padding: 0.9rem 0;
   border-radius: 8px;
-  color: white;
+  padding: 12px 24px;
   font-weight: 700;
-  font-size: 1rem;
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  user-select: none;
 }
 
-button[type="submit"]:hover,
-button[type="submit"]:focus {
+form button:hover {
   background-color: #2980b9;
-  outline: none;
 }
 
-/* Comments & Suggestions List */
-#comments-list,
-#suggestions-list {
-  margin-top: 1.5rem;
-  max-height: 280px;
+/* Listeleme */
+
+#comment-list,
+#suggestion-list {
+  margin-top: 20px;
+  max-height: 300px;
   overflow-y: auto;
-  padding-right: 0.5rem;
-  border-top: 2px solid #3498db;
+  border: 1px solid #3498db;
+  border-radius: 8px;
+  background: #222;
+  padding: 10px;
 }
 
 .comment-item,
 .suggestion-item {
-  background-color: #222;
-  border-radius: 8px;
-  padding: 0.8rem 1rem;
-  margin-bottom: 1rem;
-  user-select: text;
-  box-shadow: 0 0 10px rgba(52,152,219,0.15);
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  background: #1a1a1a;
+  border-left: 4px solid #3498db;
 }
 
-.comment-name,
-.suggestion-name {
-  font-weight: 800;
-  color: #3498db;
-  margin-bottom: 0.4rem;
+.comment-item strong,
+.suggestion-item strong {
+  color: #55acee;
 }
 
-.comment-text,
-.suggestion-text {
-  font-weight: 600;
-  color: #eee;
+.comment-item p,
+.suggestion-item p {
+  margin-top: 6px;
   white-space: pre-wrap;
+  word-break: break-word;
 }
 
-/* Support Section */
-#support iframe {
-  border-radius: 12px;
-  border: none;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  user-select: none;
+/* Hakkında */
+
+#about p {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  user-select: text;
 }
 
-/* Message Box */
-#messageBox {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
-  background-color: #3498db;
-  color: white;
-  padding: 1rem 1.2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(52,152,219,0.6);
-  font-weight: 700;
-  font-size: 1rem;
-  display: none;
-  user-select: none;
-  z-index: 1500;
+/* Animasyon */
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
-/* Responsive - Tablet */
+/* Responsive için ekstra düzenlemeler */
+
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
+  .container {
+    margin: 20px 12px;
+    padding: 15px;
   }
-}
-
-/* Responsive - Mobile */
-@media (max-width: 480px) {
-  .navbar {
-    flex-wrap: wrap;
-    gap: 0.8rem;
-  }
-
   .logo {
-    flex: 1 1 100%;
-    text-align: center;
-    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
   }
-
-  #user-area {
-    flex: 1 1 100%;
-    text-align: center;
+  .nav-links {
+    gap: 15px;
   }
-
-  .zoom-controls {
-    flex-wrap: wrap;
+  form button {
+    width: 100%;
   }
 }
-
