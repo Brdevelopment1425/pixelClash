@@ -1,309 +1,10 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>🇦🇿 Pixel Clash: Azerbaycan Devleti</title>
-<style>
-  /* Reset */
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    background: #0e0e0e;
-    color: #eee;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    user-select: none;
-    overflow-x: hidden;
-    line-height: 1.5;
-  }
-  /* Loader */
-  #loader {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #00cc66;
-    font-weight: 700;
-    font-size: 1.6rem;
-    animation: blink 1.2s infinite;
-    z-index: 9999;
-  }
-  @keyframes blink {
-    50% {opacity: 0.3;}
-  }
-  /* Header */
-  header {
-    background: linear-gradient(135deg, #0066cc, #003366);
-    padding: 15px 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    user-select: text;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  header h1 {
-    font-size: 1.8rem;
-    color: #fff;
-    user-select: text;
-  }
-  /* Desktop nav */
-  nav.desktop-nav {
-    display: flex;
-    gap: 18px;
-  }
-  nav.desktop-nav button {
-    background: transparent;
-    border: 2px solid #00cc66;
-    color: #00cc66;
-    font-weight: 600;
-    padding: 8px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
-    user-select: none;
-    font-size: 1rem;
-  }
-  nav.desktop-nav button:hover,
-  nav.desktop-nav button.active {
-    background: #00cc66;
-    color: #000;
-  }
-  /* Mobile hamburger */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 24px;
-    cursor: pointer;
-  }
-  .hamburger div {
-    width: 100%;
-    height: 4px;
-    background: #00cc66;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-  }
-  /* Mobile nav */
-  nav.mobile-nav {
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background: #1a1a1a;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(0,204,102,0.7);
-    flex-direction: column;
-    padding: 10px 0;
-    min-width: 160px;
-    user-select: none;
-  }
-  nav.mobile-nav button {
-    background: transparent;
-    border: none;
-    color: #00cc66;
-    font-weight: 600;
-    padding: 12px 20px;
-    text-align: left;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  nav.mobile-nav button:hover,
-  nav.mobile-nav button.active {
-    background: #00cc66;
-    color: #000;
-  }
-  /* Show mobile nav */
-  nav.mobile-nav.show {
-    display: flex;
-  }
-  /* Main */
-  main {
-    max-width: 960px;
-    margin: 30px auto 60px auto;
-    padding: 0 15px;
-  }
-  section {
-    background: #1a1a1a;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.7);
-    padding: 25px 20px;
-    margin-bottom: 40px;
-    display: none;
-  }
-  section.active {
-    display: block;
-  }
-  h2 {
-    color: #00ccff;
-    margin-bottom: 15px;
-    font-size: 1.8rem;
-    user-select: text;
-  }
-  /* iframe */
-  iframe {
-    width: 100%;
-    height: 450px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,204,255,0.3);
-    transition: box-shadow 0.3s ease;
-  }
-  iframe:hover {
-    box-shadow: 0 0 30px rgba(0,255,255,0.6);
-  }
-  /* Button */
-  .btn {
-    display: inline-block;
-    background: #00cc66;
-    color: #000;
-    font-weight: 700;
-    padding: 14px 28px;
-    border-radius: 12px;
-    text-decoration: none;
-    margin-top: 20px;
-    box-shadow: 0 5px 15px rgba(0,204,102,0.4);
-    transition: background 0.3s ease, transform 0.2s ease;
-    user-select: none;
-  }
-  .btn:hover,
-  .btn:focus {
-    background: #00aa55;
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(0,204,102,0.7);
-    outline: none;
-  }
-  .btn:active {
-    transform: scale(0.97);
-  }
-  /* Zoom container */
-  .zoom-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 520px;
-    background: #000;
-    border-radius: 14px;
-    box-shadow: 0 0 30px rgba(0,255,255,0.25);
-    user-select: none;
-    touch-action: none;
-  }
-  .zoom-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    cursor: grab;
-    transition: transform 0.1s ease-out;
-    will-change: transform;
-  }
-  /* About text */
-  .about-text {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    line-height: 1.6;
-  }
-  .friends-list {
-    margin: 12px 0 20px 20px;
-    list-style-type: disc;
-    color: #00cc66;
-  }
-  /* Comments */
-  #commentsList {
-    max-height: 300px;
-    overflow-y: auto;
-    background: #111;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 8px rgba(0,204,102,0.6);
-  }
-  .comment {
-    border-bottom: 1px solid #222;
-    padding: 10px 5px;
-    font-size: 0.95rem;
-  }
-  .comment:last-child {
-    border-bottom: none;
-  }
-  .comment-author {
-    color: #00ccff;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .comment-text {
-    color: #ccc;
-    white-space: pre-wrap;
-  }
-  /* Comment form */
-  #commentForm {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  #commentForm textarea {
-    resize: vertical;
-    min-height: 70px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 2px solid #00cc66;
-    background: #111;
-    color: #eee;
-    font-size: 1rem;
-    font-family: inherit;
-  }
-  #commentForm button {
-    width: 120px;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #00cc66;
-    color: #000;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    align-self: flex-start;
-  }
-  #commentForm button:hover {
-    background: #00aa55;
-  }
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 20px 10px 40px 10px;
-    font-size: 1rem;
-    opacity: 0.6;
-    user-select: text;
-  }
-  footer a {
-    color: #00ccff;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
-  }
-  footer a:hover {
-    color: #00aaff;
-  }
-  /* Responsive */
-  @media (max-width: 900px) {
-    nav.desktop-nav {
-      display: none;
-    }
-    .hamburger {
-      display: flex;
-    }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🇦🇿 Pixel Clash: Azerbaycan Devleti</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -314,10 +15,10 @@
   <h1>🇦🇿 Pixel Clash: Azerbaycan Devleti</h1>
 
   <nav class="desktop-nav" aria-label="Ana menü">
-    <button data-target="about" class="active" aria-pressed="true">Hakkında</button>
-    <button data-target="map">Harita</button>
-    <button data-target="template">Şablon</button>
-    <button data-target="comments">Yorumlar</button>
+    <button data-target="about" aria-pressed="false" onclick="scrollToSection('about')">Hakkında</button>
+    <button data-target="map" aria-pressed="false" onclick="scrollToSection('map')">Harita</button>
+    <button data-target="template" aria-pressed="false" onclick="scrollToSection('template')">Şablon</button>
+    <button data-target="comments" aria-pressed="false" onclick="scrollToSection('comments')">Yorumlar</button>
   </nav>
 
   <div class="hamburger" aria-label="Menüyü aç/kapat" role="button" tabindex="0" aria-expanded="false">
@@ -326,25 +27,25 @@
     <div></div>
   </div>
   <nav class="mobile-nav" aria-label="Mobil menü">
-    <button data-target="about" class="active" aria-pressed="true">Hakkında</button>
-    <button data-target="map">Harita</button>
-    <button data-target="template">Şablon</button>
-    <button data-target="comments">Yorumlar</button>
+    <button data-target="about" aria-pressed="false" onclick="scrollToSection('about')">Hakkında</button>
+    <button data-target="map" aria-pressed="false" onclick="scrollToSection('map')">Harita</button>
+    <button data-target="template" aria-pressed="false" onclick="scrollToSection('template')">Şablon</button>
+    <button data-target="comments" aria-pressed="false" onclick="scrollToSection('comments')">Yorumlar</button>
   </nav>
 </header>
 
 <main>
-  <section id="about" class="active" tabindex="0" aria-label="Hakkında bölümü">
+  <section id="about" tabindex="0" aria-label="Hakkında bölümü">
     <h2>📝 Hakkında</h2>
-    <p class="about-text">
+    <p>
       Yeni kurulan bir ülke: Azerbaycan<br />
       Dostları:
     </p>
-    <ul class="friends-list" aria-label="Dost ülkeler">
+    <ul>
       <li>Suriye</li>
       <li>Türkiye</li>
     </ul>
-    <p class="about-text"><em>"Siz olmadan biz tekiz."</em></p>
+    <p><em>"Siz olmadan biz tekiz."</em></p>
   </section>
 
   <section id="map" tabindex="0" aria-label="Canlı harita bölümü">
@@ -364,249 +65,35 @@
     <h2>💬 Yorumlar</h2>
     <div id="commentsList" aria-live="polite" aria-relevant="additions"></div>
     <form id="commentForm" aria-label="Yorum ekleme formu">
-      <textarea id="commentInput" placeholder="Yorumunuzu buraya yazın..." required aria-required="true" aria-describedby="commentHelp"></textarea>
+      <input
+        type="text"
+        id="commentAuthor"
+        placeholder="İsminiz"
+        required
+        aria-required="true"
+      />
+      <textarea
+        id="commentInput"
+        placeholder="Yorumunuzu buraya yazın..."
+        required
+        aria-required="true"
+      ></textarea>
       <button type="submit">Gönder</button>
-      <small id="commentHelp" style="color:#00cc66; margin-top:4px; display:block; font-size:0.9rem;">
-        Yorumlar local cihazınızda saklanır.
-      </small>
+      <small>Yorumlar local cihazınızda saklanır.</small>
     </form>
   </section>
 </main>
 
-<footer>
-  Destek Sunucusu: <a href="https://discord.gg/C3pJ4PCT" target="_blank" rel="noopener noreferrer">discord.gg/C3pJ4PCT</a>
-</footer>
+<div id="discordSupport" aria-label="Discord destek sunucusu">
+  <iframe
+    src="https://discord.com/widget?id=984848660142726982&theme=dark"
+    allowtransparency="true"
+    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+    title="Discord Destek Sunucusu"
+  ></iframe>
+</div>
 
-<script>
-  // Loader gizle
-  window.addEventListener('load', () => {
-    const loader = document.getElementById('loader');
-    loader.style.opacity = '0';
-    setTimeout(() => loader.style.display = 'none', 500);
-  });
-
-  // Menü yönetimi
-  const desktopNavButtons = document.querySelectorAll('nav.desktop-nav button');
-  const mobileNavButtons = document.querySelectorAll('nav.mobile-nav button');
-  const sections = document.querySelectorAll('main section');
-
-  function activateSection(targetId) {
-    sections.forEach(sec => {
-      if (sec.id === targetId) {
-        sec.classList.add('active');
-        sec.setAttribute('tabindex', '0');
-        sec.focus();
-      } else {
-        sec.classList.remove('active');
-        sec.setAttribute('tabindex', '-1');
-      }
-    });
-
-    [...desktopNavButtons, ...mobileNavButtons].forEach(btn => {
-      if (btn.dataset.target === targetId) {
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-      } else {
-        btn.classList.remove('active');
-        btn.setAttribute('aria-pressed', 'false');
-      }
-    });
-  }
-
-  desktopNavButtons.forEach(btn => {
-    btn.addEventListener('click', () => activateSection(btn.dataset.target));
-  });
-  mobileNavButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      activateSection(btn.dataset.target);
-      toggleMobileNav(false);
-    });
-  });
-
-  // Hamburger menü toggle
-  const hamburger = document.querySelector('.hamburger');
-  const mobileNav = document.querySelector('nav.mobile-nav');
-
-  function toggleMobileNav(show) {
-    if (show === undefined) {
-      mobileNav.classList.toggle('show');
-      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
-      hamburger.setAttribute('aria-expanded', !expanded);
-    } else {
-      if (show) {
-        mobileNav.classList.add('show');
-        hamburger.setAttribute('aria-expanded', 'true');
-      } else {
-        mobileNav.classList.remove('show');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
-    }
-  }
-
-  hamburger.addEventListener('click', () => toggleMobileNav());
-
-  hamburger.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleMobileNav();
-    }
-  });
-
-  // Zoom & sürükleme özellikleri
-  const img = document.getElementById('zoomImg');
-  const container = document.getElementById('zoomContainer');
-  let scale = 1, translateX = 0, translateY = 0;
-  let isDragging = false, startX, startY;
-
-  function updateTransform() {
-    img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-  }
-
-  container.addEventListener('wheel', e => {
-    e.preventDefault();
-
-    const rect = img.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left;
-    const offsetY = e.clientY - rect.top;
-
-    const wheelDelta = e.deltaY < 0 ? 0.1 : -0.1;
-    let newScale = Math.min(Math.max(0.5, scale + wheelDelta), 4);
-
-    const dx = (offsetX - translateX) / scale;
-    const dy = (offsetY - translateY) / scale;
-
-    translateX -= dx * (newScale - scale);
-    translateY -= dy * (newScale - scale);
-
-    scale = newScale;
-    updateTransform();
-  }, { passive: false });
-
-  container.addEventListener('mousedown', e => {
-    e.preventDefault();
-    isDragging = true;
-    startX = e.clientX - translateX;
-    startY = e.clientY - translateY;
-    img.style.cursor = 'grabbing';
-  });
-  window.addEventListener('mouseup', () => {
-    isDragging = false;
-    img.style.cursor = 'grab';
-  });
-  container.addEventListener('mouseleave', () => {
-    isDragging = false;
-    img.style.cursor = 'grab';
-  });
-  container.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    e.preventDefault();
-    translateX = e.clientX - startX;
-    translateY = e.clientY - startY;
-    updateTransform();
-  });
-
-  // Dokunmatik zoom ve sürükleme (mobil)
-  let lastTouchDist = null;
-  let lastTouchMidpoint = null;
-
-  container.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) {
-      lastTouchDist = getTouchDistance(e.touches[0], e.touches[1]);
-      lastTouchMidpoint = getTouchMidpoint(e.touches[0], e.touches[1]);
-    }
-  }, { passive: true });
-
-  container.addEventListener('touchmove', e => {
-    if (e.touches.length === 2) {
-      e.preventDefault();
-      const newDist = getTouchDistance(e.touches[0], e.touches[1]);
-      const newMid = getTouchMidpoint(e.touches[0], e.touches[1]);
-      const distDelta = newDist - lastTouchDist;
-
-      let newScale = scale + distDelta * 0.005;
-      newScale = Math.min(Math.max(0.5, newScale), 4);
-
-      const rect = img.getBoundingClientRect();
-      const offsetX = newMid.clientX - rect.left;
-      const offsetY = newMid.clientY - rect.top;
-
-      const dx = (offsetX - translateX) / scale;
-      const dy = (offsetY - translateY) / scale;
-
-      translateX -= dx * (newScale - scale);
-      translateY -= dy * (newScale - scale);
-
-      scale = newScale;
-      updateTransform();
-
-      lastTouchDist = newDist;
-      lastTouchMidpoint = newMid;
-    }
-  }, { passive: false });
-
-  container.addEventListener('touchend', e => {
-    if (e.touches.length < 2) {
-      lastTouchDist = null;
-      lastTouchMidpoint = null;
-    }
-  }, { passive: true });
-
-  function getTouchDistance(t1, t2) {
-    return Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-  }
-  function getTouchMidpoint(t1, t2) {
-    return { clientX: (t1.clientX + t2.clientX)/2, clientY: (t1.clientY + t2.clientY)/2 };
-  }
-
-  // Yorum sistemi - localStorage ile basit saklama
-  const commentsList = document.getElementById('commentsList');
-  const commentForm = document.getElementById('commentForm');
-  const commentInput = document.getElementById('commentInput');
-
-  function loadComments() {
-    let comments = JSON.parse(localStorage.getItem('comments')) || [];
-    commentsList.innerHTML = '';
-    if (comments.length === 0) {
-      commentsList.innerHTML = '<p style="color:#666; font-style: italic;">Henüz yorum yok.</p>';
-      return;
-    }
-    comments.forEach(c => {
-      const div = document.createElement('div');
-      div.classList.add('comment');
-      div.innerHTML = `
-        <div class="comment-author">${escapeHtml(c.author)}</div>
-        <div class="comment-text">${escapeHtml(c.text)}</div>
-      `;
-      commentsList.appendChild(div);
-    });
-  }
-
-  function escapeHtml(text) {
-    return text.replace(/[&<>"']/g, m => ({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#39;'
-    })[m]);
-  }
-
-  commentForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const text = commentInput.value.trim();
-    if (!text) return alert('Lütfen yorumunuzu yazın.');
-
-    let comments = JSON.parse(localStorage.getItem('comments')) || [];
-    // Basit author ismi rastgele oluştur
-    const author = 'Ziyaretçi' + Math.floor(Math.random()*1000);
-    comments.push({ author, text });
-    localStorage.setItem('comments', JSON.stringify(comments));
-    commentInput.value = '';
-    loadComments();
-  });
-
-  loadComments();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
