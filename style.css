@@ -1,264 +1,428 @@
-/* Genel stil ve font */
+/* ----------------------------------------
+   GENEL AYARLAR VE TEMA
+---------------------------------------- */
+:root {
+  --primary-color: #00cc66;
+  --primary-glow: #00ff88;
+  --background-dark: #0a0a0a;
+  --background-light: #1a1a1a;
+  --text-color: #eee;
+  --scrollbar-bg: #111;
+  --scrollbar-thumb: var(--primary-color);
+  --shadow-glow: 0 0 10px var(--primary-glow);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #0f0f0f;
-  color: #eee;
+  background-color: var(--background-dark);
+  color: var(--text-color);
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-/* Yükleme ekranı */
+/* ----------------------------------------
+   YÜKLEME EKRANI
+---------------------------------------- */
 #loader {
   position: fixed;
   inset: 0;
-  background: #000;
-  z-index: 9999;
+  background-color: var(--background-dark);
+  z-index: 99999;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.6s ease forwards;
 }
 .spinner {
-  width: 80px;
-  height: 80px;
-  border: 10px solid #00cc66;
+  width: 90px;
+  height: 90px;
+  border: 12px solid var(--primary-color);
   border-top-color: transparent;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 1.2s linear infinite;
+  box-shadow: var(--shadow-glow);
 }
-@keyframes spin {
-  to { transform: rotate(360deg); }
+#loader h1 {
+  margin-top: 15px;
+  color: var(--primary-color);
+  font-weight: 900;
+  letter-spacing: 4px;
+  font-size: 2.8rem;
+  text-shadow: var(--shadow-glow);
 }
 
-/* Menü stilleri */
-.desktop-nav, .mobile-nav {
-  background: #111;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0 0 12px #00cc66;
+/* ----------------------------------------
+   NAVİGASYON MENÜSÜ
+---------------------------------------- */
+.desktop-nav,
+.mobile-nav {
+  background-color: var(--background-light);
+  padding: 12px 20px;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 2000;
+  box-shadow: 0 0 20px var(--primary-glow);
+  user-select: none;
 }
+
 .desktop-nav ul {
   display: flex;
-  list-style: none;
   justify-content: center;
-  gap: 25px;
+  list-style: none;
+  gap: 35px;
   margin: 0;
   padding: 0;
 }
-.desktop-nav a, .mobile-nav select {
-  color: #00cc66;
+
+.desktop-nav a {
+  color: var(--primary-color);
+  font-weight: 900;
+  font-size: 1.15rem;
   text-decoration: none;
-  font-weight: bold;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.desktop-nav a:hover {
-  color: #00ff88;
-}
-.mobile-nav select {
-  background: #111;
-  color: #00cc66;
-  padding: 10px;
-  font-weight: bold;
-  border-radius: 6px;
-  border: 1px solid #00cc66;
-}
-
-/* Medya sorguları */
-.desktop-nav { display: none; }
-.mobile-nav { display: block; }
-@media (min-width: 768px) {
-  .desktop-nav { display: flex; }
-  .mobile-nav { display: none; }
-}
-
-/* Harita önizleme */
-#zoomContainer {
-  overflow: auto;
-  max-width: 90%;
-  max-height: 600px;
-  margin: 20px auto;
-  background: #222;
-  border: 2px solid #00cc66;
-  border-radius: 10px;
   position: relative;
-  text-align: center;
-  box-shadow: 0 0 15px #00cc6680;
-  transition: box-shadow 0.3s ease;
+  padding: 6px 0;
+  transition: color 0.3s ease;
 }
+
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-glow);
+  transition: width 0.35s ease;
+  border-radius: 2px;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a:focus {
+  color: var(--primary-glow);
+}
+
+.desktop-nav a:hover::after,
+.desktop-nav a:focus::after {
+  width: 100%;
+}
+
+/* Mobil Menü Seçenekleri */
+.mobile-nav select {
+  width: 100%;
+  padding: 12px 18px;
+  font-weight: 900;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  background-color: var(--background-light);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  box-shadow: 0 0 15px var(--primary-glow);
+  user-select: none;
+}
+
+.mobile-nav select:hover,
+.mobile-nav select:focus {
+  border-color: var(--primary-glow);
+  outline: none;
+}
+
+/* ----------------------------------------
+   MEDYA SORGULARI (RESPONSIVE)
+---------------------------------------- */
+.desktop-nav {
+  display: none;
+}
+
+.mobile-nav {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .desktop-nav {
+    display: flex;
+  }
+  .mobile-nav {
+    display: none;
+  }
+}
+
+/* ----------------------------------------
+   HARİTA ÖNİZLEME KONTEYNERİ
+---------------------------------------- */
+#zoomContainer {
+  position: relative;
+  max-width: 90%;
+  max-height: 650px;
+  margin: 30px auto 40px;
+  background-color: var(--background-light);
+  border-radius: 14px;
+  border: 3px solid var(--primary-color);
+  overflow: auto;
+  box-shadow: 0 0 30px var(--primary-glow);
+  transition: box-shadow 0.4s ease;
+  user-select: none;
+}
+
 #zoomContainer:hover {
-  box-shadow: 0 0 25px #00cc66;
+  box-shadow: 0 0 45px var(--primary-glow);
 }
+
 #zoomImg {
   width: 100%;
   height: auto;
-  transition: transform 0.3s ease;
   cursor: zoom-in;
-  border-radius: 8px;
+  border-radius: 12px;
+  transition: transform 0.4s ease;
+  user-select: none;
 }
+
 #zoomImg.zoomed {
-  transform: scale(2);
   cursor: zoom-out;
+  transform: scale(2.5);
+  transition: transform 0.5s ease;
 }
+
+/* Zoom düğmesi */
 #zoomContainer button {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #00cc66;
-  color: white;
+  top: 15px;
+  right: 15px;
+  background-color: var(--primary-color);
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 0 6px #00cc66;
-  transition: background 0.3s ease;
-}
-#zoomContainer button:hover {
-  background: #009944;
-}
-
-/* Formlar */
-form {
-  margin: 20px auto;
-  max-width: 600px;
-  padding: 20px;
-  background: #1a1a1a;
   border-radius: 10px;
-  border: 1px solid #00cc66;
-  box-shadow: 0 0 8px #00cc66;
-  transition: box-shadow 0.3s ease;
-}
-form:hover {
-  box-shadow: 0 0 16px #00ff88;
-}
-form input, form textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #00cc66;
-  background: #111;
-  color: #eee;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-form input:focus, form textarea:focus {
-  border-color: #00ff88;
-  outline: none;
-}
-form button {
-  padding: 12px 30px;
-  background: #00cc66;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
   font-weight: 700;
   font-size: 1rem;
-  box-shadow: 0 0 8px #00cc66;
-  transition: background 0.3s ease;
-}
-form button:hover {
-  background: #009944;
+  padding: 8px 16px;
+  cursor: pointer;
+  box-shadow: 0 0 15px var(--primary-glow);
+  transition: background-color 0.3s ease;
+  user-select: none;
 }
 
-/* Yorum ve öneri listeleri */
-#commentsList, #suggestionsList {
-  background: #1a1a1a;
+#zoomContainer button:hover {
+  background-color: #009944;
+}
+
+/* ----------------------------------------
+   FORM ALANLARI
+---------------------------------------- */
+form {
+  max-width: 650px;
+  margin: 30px auto 50px;
+  background-color: var(--background-light);
+  padding: 30px 25px;
+  border-radius: 14px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 25px var(--primary-glow);
+  transition: box-shadow 0.4s ease;
+  user-select: none;
+}
+
+form:hover {
+  box-shadow: 0 0 35px var(--primary-glow);
+}
+
+form input,
+form textarea {
+  width: 100%;
+  background-color: #0f0f0f;
+  color: var(--text-color);
+  border: 2px solid var(--primary-color);
   border-radius: 10px;
-  padding: 20px;
-  border: 1px solid #00cc66;
-  margin: 0 auto 40px auto;
-  max-width: 600px;
-  box-shadow: inset 0 0 12px #00cc66;
+  padding: 15px 18px;
+  margin-bottom: 18px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: border-color 0.4s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: text;
 }
-.comment, .suggestion {
-  padding: 15px;
-  border-bottom: 1px solid #00cc66;
-  transition: background 0.3s ease;
+
+form input:focus,
+form textarea:focus {
+  border-color: var(--primary-glow);
+  outline: none;
+}
+
+form button {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--primary-glow);
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+form button:hover {
+  background-color: #009944;
+  box-shadow: 0 0 25px #00ff88;
+}
+
+/* ----------------------------------------
+   YORUMLAR VE ÖNERİLER KUTULARI
+---------------------------------------- */
+#commentsList,
+#suggestionsList {
+  max-width: 650px;
+  margin: 0 auto 60px;
+  background-color: var(--background-light);
+  border-radius: 14px;
+  padding: 25px;
+  border: 2px solid var(--primary-color);
+  box-shadow: inset 0 0 30px var(--primary-glow);
+  user-select: none;
+}
+
+.comment,
+.suggestion {
+  padding: 20px 15px;
+  border-bottom: 2px solid var(--primary-color);
   cursor: default;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  user-select: text;
 }
-.comment:last-child, .suggestion:last-child {
+
+.comment:last-child,
+.suggestion:last-child {
   border-bottom: none;
 }
-.comment:hover, .suggestion:hover {
-  background: #007733;
-  box-shadow: 0 0 10px #00cc66;
-  border-radius: 8px;
+
+.comment:hover,
+.suggestion:hover {
+  background-color: #007733;
+  box-shadow: 0 0 25px var(--primary-glow);
 }
 
-/* Discord desteği */
+/* ----------------------------------------
+   DISCORD DESTEK KUTUSU
+---------------------------------------- */
 #discordSupport {
-  width: 100%;
-  max-width: 420px;
-  margin: 40px auto 80px auto;
-  background: #111;
-  border: 2px solid #7289da;
-  border-radius: 12px;
+  max-width: 460px;
+  margin: 50px auto 100px;
+  background-color: #111;
+  border: 3px solid #7289da;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 0 20px #7289da80;
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 0 40px #7289daaa;
+  transition: box-shadow 0.5s ease;
+  user-select: none;
 }
 #discordSupport iframe {
   width: 100%;
-  height: 400px;
+  height: 420px;
   border: none;
 }
 
-/* Hakkında bölümü */
+/* ----------------------------------------
+   HAKKINDA BÖLÜMÜ
+---------------------------------------- */
 #about {
-  max-width: 700px;
-  margin: 40px auto 60px auto;
-  background: #111;
-  padding: 25px 20px;
-  border-radius: 12px;
-  border: 1px solid #00cc66;
+  max-width: 750px;
+  margin: 50px auto 70px;
+  background-color: #111;
+  border-radius: 20px;
+  border: 3px solid var(--primary-color);
+  padding: 30px 25px;
   text-align: center;
-  box-shadow: 0 0 18px #00cc6690;
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 0 35px var(--primary-glow);
+  user-select: text;
+  color: var(--text-color);
+  line-height: 1.7;
 }
 
-/* Scrollbar özelleştirme */
+/* ----------------------------------------
+   SCROLLBAR STİLİ
+---------------------------------------- */
 body::-webkit-scrollbar {
-  width: 12px;
+  width: 14px;
 }
 body::-webkit-scrollbar-track {
-  background: #111;
-  border-radius: 10px;
+  background: var(--scrollbar-bg);
+  border-radius: 12px;
 }
 body::-webkit-scrollbar-thumb {
-  background-color: #00cc66;
-  border-radius: 10px;
-  border: 3px solid #111;
+  background-color: var(--scrollbar-thumb);
+  border-radius: 12px;
+  border: 4px solid var(--scrollbar-bg);
 }
 
-/* Responsive eklemeler */
-@media (max-width: 600px) {
-  form {
-    padding: 15px;
-    margin: 15px;
-  }
+/* ----------------------------------------
+   MEDYA SORGULARI
+---------------------------------------- */
+@media (max-width: 650px) {
   #discordSupport {
     max-width: 100%;
-    margin: 20px auto 40px auto;
     height: 300px;
+    margin: 25px 0 50px 0;
   }
-  #commentsList, #suggestionsList {
+  #commentsList,
+  #suggestionsList {
     max-width: 100%;
-    margin: 0 10px 30px 10px;
+    margin: 0 15px 45px 15px;
   }
   #about {
-    margin: 20px 10px 40px 10px;
-    padding: 15px 10px;
+    max-width: 95%;
+    margin: 30px 10px 50px 10px;
     font-size: 1rem;
+    padding: 20px 15px;
+  }
+  form {
+    max-width: 100%;
+    margin: 25px 10px 50px 10px;
+    padding: 20px 15px;
+  }
+  .desktop-nav ul {
+    gap: 20px;
+  }
+}
+
+/* ----------------------------------------
+   ANİMASYONLAR
+---------------------------------------- */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px var(--primary-glow);
+  }
+  50% {
+    box-shadow: 0 0 25px var(--primary-glow);
   }
 }
