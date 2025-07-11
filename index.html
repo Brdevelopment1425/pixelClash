@@ -9,6 +9,17 @@
 <body>
   <div id="loader"><div class="spinner"></div><h1>AZE PPF</h1></div>
 
+  <!-- Mobil Menü -->
+  <nav class="mobile-nav">
+    <select onchange="location.href=this.value">
+      <option value="#map">Harita</option>
+      <option value="#comments">Yorumlar</option>
+      <option value="#suggestions">Öneriler</option>
+      <option value="#about">Hakkında</option>
+    </select>
+  </nav>
+
+  <!-- Masaüstü Menü -->
   <nav class="desktop-nav">
     <ul>
       <li><a href="#map">Harita</a></li>
@@ -22,11 +33,12 @@
     <h2>Ülke Haritası</h2>
     <div id="zoomContainer">
       <img src="AZEPPF-1.png" id="zoomImg" alt="Azerbaycan PPF Harita Önizleme" />
+      <button onclick="zoomImg.classList.toggle('zoomed')">🔍 Tam ekran</button>
     </div>
   </section>
 
   <section id="comments">
-    <h2>💬 Ziyaretçi Yorumları</h2>
+    <h2>🗨️ Ziyaretçi Yorumları</h2>
     <form id="commentForm">
       <input type="text" id="commentAuthor" placeholder="İsminiz" required />
       <textarea id="commentInput" placeholder="Yorumunuzu yazın..." required></textarea>
