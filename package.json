@@ -1,15 +1,16 @@
 {
-  "name": "pixel-login-site",
+  "name": "pixel-clash-server",
   "version": "1.0.0",
-  "description": "Gmail doğrulamalı giriş sistemi",
+  "description": "Pixel Clash Admin Giriş ve Doğrulama Sunucusu",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
+  "author": "SeninAdın",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "express-session": "^1.17.3",
+    "express-rate-limit": "^7.0.0",
     "nodemailer": "^6.9.3"
   }
 }
