@@ -2,125 +2,134 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Azerbaycan PPF - İzleme & Yorum Sistemi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pixel Clash - Ülke Ön İzleme</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="loader"><div class="spinner"></div><h1>AZE PPF</h1></div>
 
-  <!-- Mobil Menü -->
-  <nav class="mobile-nav">
-    <select onchange="location.href=this.value">
-      <option value="#map">Harita</option>
-      <option value="#comments">Yorumlar</option>
-      <option value="#suggestions">Öneriler</option>
-      <option value="#about">Hakkında</option>
-    </select>
-  </nav>
+<!-- Loader -->
+<div id="loader">
+  Yükleniyor...
+</div>
 
-  <!-- Masaüstü Menü -->
-  <nav class="desktop-nav">
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">Pixel Clash</div>
+
+  <ul class="nav-links">
+    <li><a href="#home">Ana Sayfa</a></li>
+    <li class="dropdown">
+      <a href="#" class="dropbtn">Hakkında ▾</a>
+      <ul class="dropdown-content">
+        <li><a href="#hakkinda">Hakkında Bölümü</a></li>
+        <li><a href="#dostlar">Dostlar</a></li>
+        <li><a href="#yorumlar">Yorumlar</a></li>
+      </ul>
+    </li>
+    <li><a href="#harita">Harita</a></li>
+    <li><a href="#destek">Destek</a></li>
+  </ul>
+
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- İçerik -->
+<main>
+
+  <!-- Hakkında -->
+  <section id="hakkinda" class="container">
+    <h2>Hakkında</h2>
+    <p>Yeni kurulan bir ülke. Dostları: Suriye, Türkiye. Siz olmadan biz tekiz.</p>
+  </section>
+
+  <!-- Dostlar -->
+  <section id="dostlar" class="container">
+    <h2>Dostlar</h2>
     <ul>
-      <li><a href="#map">Harita</a></li>
-      <li><a href="#comments">Yorumlar</a></li>
-      <li><a href="#suggestions">Öneriler</a></li>
-      <li><a href="#about">Hakkında</a></li>
+      <li>Suriye</li>
+      <li>Türkiye</li>
     </ul>
-  </nav>
+  </section>
 
-  <section id="map">
-    <h2>Ülke Haritası</h2>
-    <div id="zoomContainer">
-      <img src="AZEPPF-1.png" id="zoomImg" alt="Azerbaycan PPF Harita Önizleme" />
-      <button onclick="zoomImg.classList.toggle('zoomed')">🔍 Tam ekran</button>
+  <!-- Yorumlar -->
+  <section id="yorumlar" class="container">
+    <h2>Yorumlar</h2>
+    <form id="commentForm" autocomplete="off">
+      <input type="text" id="commentName" placeholder="İsim" maxlength="30" required />
+      <textarea id="commentText" placeholder="Yorumunuz..." maxlength="300" required></textarea>
+
+      <!-- Honeypot -->
+      <input type="text" id="hpField" style="display:none" autocomplete="off" />
+
+      <!-- Captcha -->
+      <label id="captchaQuestion"></label>
+      <input type="number" id="captchaInput" required placeholder="Captcha sonucu" />
+
+      <button type="submit">Gönder</button>
+    </form>
+
+    <div id="commentsList" class="comments-list"></div>
+  </section>
+
+  <!-- Öneriler -->
+  <section id="oneriler" class="container">
+    <h2>Öneriler</h2>
+    <form id="suggestionForm" autocomplete="off">
+      <input type="text" id="suggestionName" placeholder="İsim" maxlength="30" required />
+      <textarea id="suggestionText" placeholder="Öneriniz..." maxlength="300" required></textarea>
+
+      <!-- Honeypot -->
+      <input type="text" id="hpFieldSuggestion" style="display:none" autocomplete="off" />
+
+      <!-- Captcha -->
+      <label id="captchaQuestionSuggestion"></label>
+      <input type="number" id="captchaInputSuggestion" required placeholder="Captcha sonucu" />
+
+      <button type="submit">Gönder</button>
+    </form>
+
+    <div id="suggestionsList" class="suggestions-list"></div>
+  </section>
+
+  <!-- Harita -->
+  <section id="harita" class="container">
+    <h2>Harita Önizleme</h2>
+    <div class="zoom-container">
+      <img
+        src="AZEPPF-1.png"
+        alt="Azerbaycan Ülke Haritası"
+        id="zoomImg"
+        class="zoomable"
+        draggable="false"
+      />
+      <button id="zoomBtn" class="zoom-btn">Yakınlaştır</button>
     </div>
   </section>
 
-  <section id="comments">
-    <h2>🗨️ Ziyaretçi Yorumları</h2>
-    <form id="commentForm">
-      <input type="text" id="commentAuthor" placeholder="İsminiz" required />
-      <textarea id="commentInput" placeholder="Yorumunuzu yazın..." required></textarea>
-      <button type="submit">Gönder</button>
-      <!-- Honeypot alanı (gizli) -->
-<input type="text" id="hpField" name="hpField" style="display:none" autocomplete="off" tabindex="-1" />
-
-<!-- Captcha alanı -->
-<div id="captchaContainer">
-  <label id="captchaQuestion" for="captchaInput"></label>
-  <input type="text" id="captchaInput" name="captchaInput" autocomplete="off" required />
-</div>
-
-<!-- Mesaj kutusu -->
-<div id="messageBox" style="
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 204, 102, 0.9);
-  color: #000;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  z-index: 10000;
-"></div>
-
-    </form>
-    <div id="commentsList"></div>
+  <!-- Destek Sunucusu -->
+  <section id="destek" class="container destek-container">
+    <h2>Destek Sunucusu</h2>
+    <iframe
+      src="https://discord.com/widget?id=947189284903220541&theme=dark"
+      width="350"
+      height="500"
+      allowtransparency="true"
+      frameborder="0"
+      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+      title="Discord Destek Sunucusu"
+    ></iframe>
   </section>
 
-  <section id="suggestions">
-    <h2>💡 Öneri Gönder</h2>
-    <form id="suggestionForm">
-      <input type="text" id="suggestionAuthor" placeholder="İsminiz" required />
-      <textarea id="suggestionInput" placeholder="Önerinizi yazın..." required></textarea>
-      <button type="submit">Gönder</button>
-      <!-- Honeypot alanı (gizli) -->
-<input type="text" id="hpField" name="hpField" style="display:none" autocomplete="off" tabindex="-1" />
+  <!-- Mesaj kutusu -->
+  <div id="messageBox" class="message-box"></div>
 
-<!-- Captcha alanı -->
-<div id="captchaContainer">
-  <label id="captchaQuestion" for="captchaInput"></label>
-  <input type="text" id="captchaInput" name="captchaInput" autocomplete="off" required />
-</div>
+</main>
 
-<!-- Mesaj kutusu -->
-<div id="messageBox" style="
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 204, 102, 0.9);
-  color: #000;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  z-index: 10000;
-"></div>
-
-    </form>
-    <div id="suggestionsList"></div>
-  </section>
-
-  <section id="about">
-    <h2>🇦🇿 Hakkında</h2>
-    <p>Yeni kurulan bir ülke. <strong>Dostları: Türkiye, Suriye</strong>. Siz olmadan biz tekiz.</p>
-  </section>
-
-  <div id="discordSupport">
-    <iframe src="https://discord.com/widget?id=984848660142726982&theme=dark"
-      allowtransparency="true" sandbox="allow-popups allow-same-origin allow-scripts"></iframe>
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
