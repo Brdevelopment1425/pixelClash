@@ -1,4 +1,70 @@
 // script.js
+// Giriş sistemi
+const loginBtn = document.getElementById("login-btn");
+const loginPopup = document.getElementById("login-popup");
+const closeLogin = document.getElementById("close-login");
+
+const emailForm = document.getElementById("email-form");
+const codeForm = document.getElementById("code-form");
+const loginEmail = document.getElementById("login-email");
+const loginCode = document.getElementById("login-code");
+
+loginBtn.addEventListener("click", () => {
+  loginPopup.style.display = "flex";
+  emailForm.style.display = "block";
+  codeForm.style.display = "none";
+});
+
+closeLogin.addEventListener("click", () => {
+  loginPopup.style.display = "none";
+});
+
+// Kod gönderme
+emailForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = loginEmail.value.trim();
+
+  const res = await fetch("/send-code", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email })
+  });
+
+  const msg = await res.text();
+  if (res.ok) {
+    alert("Kod gönderildi.");
+    emailForm.style.display = "none";
+    codeForm.style.display = "block";
+  } else {
+    alert("Hata: " + msg);
+  }
+});
+
+// Kod doğrulama
+codeForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const code = loginCode.value.trim();
+  const email = loginEmail.value.trim();
+
+  const res = await fetch("/verify-code", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, code })
+  });
+
+  const msg = await res.text();
+  if (res.ok) {
+    alert("Giriş başarılı!");
+    loginPopup.style.display = "none";
+    document.getElementById("login-menu").style.display = "none";
+    document.getElementById("profile-menu").style.display = "block";
+    document.getElementById("profile-pic").src = "https://www.gravatar.com/avatar/" + md5(email) + "?d=identicon";
+    document.getElementById("profile-name").innerText = email;
+  } else {
+    alert("Kod doğrulanamadı: " + msg);
+  }
+});
+
 document.getElementById("comment-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const ad = document.getElementById("comment-name").value.trim();
