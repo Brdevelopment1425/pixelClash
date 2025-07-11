@@ -1,112 +1,15 @@
-/* Genel stil */
+/* Genel stil ve font */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0e0e0e;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #0f0f0f;
   color: #eee;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-nav.desktop-nav {
-  background: #111;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  box-shadow: 0 0 12px #00cc66;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-nav.desktop-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-  padding: 0;
-  margin: 0;
-}
-nav.desktop-nav ul li a {
-  color: #00cc66;
-  text-decoration: none;
-  font-weight: bold;
-}
-nav.desktop-nav ul li a:hover {
-  color: #00ff88;
-}
-
-/* Harita */
-#zoomContainer {
-  overflow: auto;
-  max-width: 100%;
-  max-height: 600px;
-  margin: 20px auto;
-  background: #222;
-  border: 2px solid #00cc66;
-  border-radius: 10px;
-}
-#zoomImg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* Yorumlar ve Öneriler */
-form {
-  margin-bottom: 20px;
-}
-form input, form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #00cc66;
-  background: #111;
-  color: #eee;
-}
-form button {
-  padding: 10px 20px;
-  background: #00cc66;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-form button:hover {
-  background: #00aa55;
-}
-
-#commentsList, #suggestionsList {
-  background: #1a1a1a;
-  border-radius: 10px;
-  padding: 15px;
-  border: 1px solid #00cc66;
-}
-
-.comment, .suggestion {
-  padding: 10px;
-  border-bottom: 1px solid #00cc66;
-}
-.comment:last-child, .suggestion:last-child {
-  border-bottom: none;
-}
-
-/* Discord */
-#discordSupport {
-  width: 100%;
-  max-width: 420px;
-  margin: 40px auto;
-  background: #111;
-  border: 2px solid #7289da;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 15px #7289da80;
-}
-#discordSupport iframe {
-  width: 100%;
-  height: 400px;
-  border: none;
-}
-
-/* Loader */
+/* Yükleme ekranı */
 #loader {
   position: fixed;
   inset: 0;
@@ -127,4 +30,235 @@ form button:hover {
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* Menü stilleri */
+.desktop-nav, .mobile-nav {
+  background: #111;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 12px #00cc66;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.desktop-nav ul {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+.desktop-nav a, .mobile-nav select {
+  color: #00cc66;
+  text-decoration: none;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.desktop-nav a:hover {
+  color: #00ff88;
+}
+.mobile-nav select {
+  background: #111;
+  color: #00cc66;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 6px;
+  border: 1px solid #00cc66;
+}
+
+/* Medya sorguları */
+.desktop-nav { display: none; }
+.mobile-nav { display: block; }
+@media (min-width: 768px) {
+  .desktop-nav { display: flex; }
+  .mobile-nav { display: none; }
+}
+
+/* Harita önizleme */
+#zoomContainer {
+  overflow: auto;
+  max-width: 90%;
+  max-height: 600px;
+  margin: 20px auto;
+  background: #222;
+  border: 2px solid #00cc66;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 0 15px #00cc6680;
+  transition: box-shadow 0.3s ease;
+}
+#zoomContainer:hover {
+  box-shadow: 0 0 25px #00cc66;
+}
+#zoomImg {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+  border-radius: 8px;
+}
+#zoomImg.zoomed {
+  transform: scale(2);
+  cursor: zoom-out;
+}
+#zoomContainer button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #00cc66;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 6px #00cc66;
+  transition: background 0.3s ease;
+}
+#zoomContainer button:hover {
+  background: #009944;
+}
+
+/* Formlar */
+form {
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  background: #1a1a1a;
+  border-radius: 10px;
+  border: 1px solid #00cc66;
+  box-shadow: 0 0 8px #00cc66;
+  transition: box-shadow 0.3s ease;
+}
+form:hover {
+  box-shadow: 0 0 16px #00ff88;
+}
+form input, form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #00cc66;
+  background: #111;
+  color: #eee;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+form input:focus, form textarea:focus {
+  border-color: #00ff88;
+  outline: none;
+}
+form button {
+  padding: 12px 30px;
+  background: #00cc66;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 0 8px #00cc66;
+  transition: background 0.3s ease;
+}
+form button:hover {
+  background: #009944;
+}
+
+/* Yorum ve öneri listeleri */
+#commentsList, #suggestionsList {
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #00cc66;
+  margin: 0 auto 40px auto;
+  max-width: 600px;
+  box-shadow: inset 0 0 12px #00cc66;
+}
+.comment, .suggestion {
+  padding: 15px;
+  border-bottom: 1px solid #00cc66;
+  transition: background 0.3s ease;
+  cursor: default;
+}
+.comment:last-child, .suggestion:last-child {
+  border-bottom: none;
+}
+.comment:hover, .suggestion:hover {
+  background: #007733;
+  box-shadow: 0 0 10px #00cc66;
+  border-radius: 8px;
+}
+
+/* Discord desteği */
+#discordSupport {
+  width: 100%;
+  max-width: 420px;
+  margin: 40px auto 80px auto;
+  background: #111;
+  border: 2px solid #7289da;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px #7289da80;
+  transition: box-shadow 0.3s ease;
+}
+#discordSupport iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+}
+
+/* Hakkında bölümü */
+#about {
+  max-width: 700px;
+  margin: 40px auto 60px auto;
+  background: #111;
+  padding: 25px 20px;
+  border-radius: 12px;
+  border: 1px solid #00cc66;
+  text-align: center;
+  box-shadow: 0 0 18px #00cc6690;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Scrollbar özelleştirme */
+body::-webkit-scrollbar {
+  width: 12px;
+}
+body::-webkit-scrollbar-track {
+  background: #111;
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #00cc66;
+  border-radius: 10px;
+  border: 3px solid #111;
+}
+
+/* Responsive eklemeler */
+@media (max-width: 600px) {
+  form {
+    padding: 15px;
+    margin: 15px;
+  }
+  #discordSupport {
+    max-width: 100%;
+    margin: 20px auto 40px auto;
+    height: 300px;
+  }
+  #commentsList, #suggestionsList {
+    max-width: 100%;
+    margin: 0 10px 30px 10px;
+  }
+  #about {
+    margin: 20px 10px 40px 10px;
+    padding: 15px 10px;
+    font-size: 1rem;
+  }
 }
