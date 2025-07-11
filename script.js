@@ -2,16 +2,18 @@
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  // 3 saniye bekle
+  const content = document.getElementById("content");
+
+  // 3 saniye sonra loader gizlenip içerik gösterilecek
   setTimeout(() => {
-    if (loader) {
-      loader.classList.add("hidden");
-      setTimeout(() => {
-        loader.remove();
-      }, 600); // opacity geçişi için 600ms bekle
-    }
-  }, 3000); // 3000ms = 3 saniye
+    loader.classList.add("hidden");
+    setTimeout(() => {
+      loader.remove();
+      content.style.display = "block";
+    }, 600); // opacity geçişi
+  }, 3000);
 });
+
 
 
 // Menü açma/kapama için checkbox zaten var, ekstra js gerekmez.
