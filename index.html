@@ -1,135 +1,90 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pixel Clash - Ülke Ön İzleme</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Pixel Clash - Ülke Önizleme & Destek</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- Loader -->
-<div id="loader">
-  Yükleniyor...
+<!-- Yükleme ekranı -->
+<div id="loader" role="alert" aria-live="assertive" aria-label="Sayfa yükleniyor" aria-busy="true">
+  <div class="spinner"></div>
+  <p>Yükleniyor, lütfen bekleyiniz...</p>
 </div>
 
-<!-- Navbar -->
-<nav class="navbar">
-  <div class="logo">Pixel Clash</div>
+<nav class="navbar" aria-label="Ana navigasyon">
+  <div class="logo" tabindex="0">Pixel Clash</div>
 
-  <ul class="nav-links">
-    <li><a href="#home">Ana Sayfa</a></li>
-    <li class="dropdown">
-      <a href="#" class="dropbtn">Hakkında ▾</a>
-      <ul class="dropdown-content">
-        <li><a href="#hakkinda">Hakkında Bölümü</a></li>
-        <li><a href="#dostlar">Dostlar</a></li>
-        <li><a href="#yorumlar">Yorumlar</a></li>
-      </ul>
-    </li>
-    <li><a href="#harita">Harita</a></li>
-    <li><a href="#destek">Destek</a></li>
+  <button class="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links" id="nav-menu" role="menu">
+    <li role="none"><a role="menuitem" href="#preview">Önizleme</a></li>
+    <li role="none"><a role="menuitem" href="#about">Hakkında</a></li>
+    <li role="none"><a role="menuitem" href="#comments">Yorumlar</a></li>
+    <li role="none"><a role="menuitem" href="#suggestions">Öneriler</a></li>
+    <li role="none"><a role="menuitem" href="#support">Destek</a></li>
   </ul>
-
-  <div class="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
 </nav>
 
-<!-- İçerik -->
-<main>
+<main aria-live="polite">
 
-  <!-- Hakkında -->
-  <section id="hakkinda" class="container">
-    <h2>Hakkında</h2>
-    <p>Yeni kurulan bir ülke. Dostları: Suriye, Türkiye. Siz olmadan biz tekiz.</p>
-  </section>
-
-  <!-- Dostlar -->
-  <section id="dostlar" class="container">
-    <h2>Dostlar</h2>
-    <ul>
-      <li>Suriye</li>
-      <li>Türkiye</li>
-    </ul>
-  </section>
-
-  <!-- Yorumlar -->
-  <section id="yorumlar" class="container">
-    <h2>Yorumlar</h2>
-    <form id="commentForm" autocomplete="off">
-      <input type="text" id="commentName" placeholder="İsim" maxlength="30" required />
-      <textarea id="commentText" placeholder="Yorumunuz..." maxlength="300" required></textarea>
-
-      <!-- Honeypot -->
-      <input type="text" id="hpField" style="display:none" autocomplete="off" />
-
-      <!-- Captcha -->
-      <label id="captchaQuestion"></label>
-      <input type="number" id="captchaInput" required placeholder="Captcha sonucu" />
-
-      <button type="submit">Gönder</button>
-    </form>
-
-    <div id="commentsList" class="comments-list"></div>
-  </section>
-
-  <!-- Öneriler -->
-  <section id="oneriler" class="container">
-    <h2>Öneriler</h2>
-    <form id="suggestionForm" autocomplete="off">
-      <input type="text" id="suggestionName" placeholder="İsim" maxlength="30" required />
-      <textarea id="suggestionText" placeholder="Öneriniz..." maxlength="300" required></textarea>
-
-      <!-- Honeypot -->
-      <input type="text" id="hpFieldSuggestion" style="display:none" autocomplete="off" />
-
-      <!-- Captcha -->
-      <label id="captchaQuestionSuggestion"></label>
-      <input type="number" id="captchaInputSuggestion" required placeholder="Captcha sonucu" />
-
-      <button type="submit">Gönder</button>
-    </form>
-
-    <div id="suggestionsList" class="suggestions-list"></div>
-  </section>
-
-  <!-- Harita -->
-  <section id="harita" class="container">
-    <h2>Harita Önizleme</h2>
-    <div class="zoom-container">
-      <img
-        src="AZEPPF-1.png"
-        alt="Azerbaycan Ülke Haritası"
-        id="zoomImg"
-        class="zoomable"
-        draggable="false"
-      />
-      <button id="zoomBtn" class="zoom-btn">Yakınlaştır</button>
+  <section id="preview" class="section-container fade-in-up" tabindex="0" aria-label="Ülke önizleme bölümü">
+    <h1>Pixel Clash - Yeni Kurulan Ülke</h1>
+    <div id="preview-area" class="responsive-container" aria-atomic="true">
+      <img id="country-img" class="responsive-img" src="AZEPPF-1.png" alt="Azerbaycan Ülke Şablonu" />
+    </div>
+    <div id="zoom-controls" aria-label="Yakınlaştırma Kontrolleri">
+      <button type="button" class="zoom-btn" id="zoom-in" aria-label="Yakınlaştır">+</button>
+      <button type="button" class="zoom-btn" id="zoom-out" aria-label="Uzaklaştır">-</button>
+      <button type="button" class="zoom-btn" id="zoom-reset" aria-label="Yakınlaştırmayı sıfırla">Reset</button>
     </div>
   </section>
 
-  <!-- Destek Sunucusu -->
-  <section id="destek" class="container destek-container">
-    <h2>Destek Sunucusu</h2>
-    <iframe
-      src="https://discord.com/widget?id=947189284903220541&theme=dark"
-      width="350"
-      height="500"
-      allowtransparency="true"
-      frameborder="0"
-      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-      title="Discord Destek Sunucusu"
-    ></iframe>
+  <section id="about" class="section-container fade-in-up" tabindex="0" aria-label="Hakkında Bölümü">
+    <h2>Hakkında</h2>
+    <p>
+      Yeni kurulan bu ülkenin dostları: Suriye, Türkiye.<br />
+      Siz olmadan biz tekiz. Birlikte güçlü geleceğe!
+    </p>
   </section>
 
-  <!-- Mesaj kutusu -->
-  <div id="messageBox" class="message-box"></div>
+  <section id="comments" class="section-container fade-in-up" tabindex="0" aria-label="Yorumlar Bölümü">
+    <h3>Yorumlar</h3>
+    <form id="comment-form" aria-label="Yorum yapma formu" novalidate>
+      <label for="comment-name">İsim (zorunlu):</label>
+      <input type="text" id="comment-name" name="name" placeholder="Adınızı yazınız" required autocomplete="off" />
+      <label for="comment-text">Yorumunuz (zorunlu):</label>
+      <textarea id="comment-text" name="comment" rows="4" placeholder="Yorumunuzu yazınız" required></textarea>
+      <button type="submit" aria-live="polite">Gönder</button>
+    </form>
+    <div class="comments-list" id="comments-list" aria-live="polite" aria-relevant="additions"></div>
+  </section>
+
+  <section id="suggestions" class="section-container fade-in-up" tabindex="0" aria-label="Öneriler Bölümü">
+    <h3>Öneriler</h3>
+    <form id="suggestion-form" aria-label="Öneri yapma formu" novalidate>
+      <label for="suggestion-name">İsim (zorunlu):</label>
+      <input type="text" id="suggestion-name" name="name" placeholder="Adınızı yazınız" required autocomplete="off" />
+      <label for="suggestion-text">Öneriniz (zorunlu):</label>
+      <textarea id="suggestion-text" name="suggestion" rows="4" placeholder="Önerinizi yazınız" required></textarea>
+      <button type="submit" aria-live="polite">Gönder</button>
+    </form>
+    <div class="suggestions-list" id="suggestions-list" aria-live="polite" aria-relevant="additions"></div>
+  </section>
+
+  <section id="support" class="section-container fade-in-up" tabindex="0" aria-label="Destek Sunucusu">
+    <h3>Destek Sunucusu</h3>
+    <iframe src="https://discord.com/widget?id=105181377969304449&theme=dark" width="100%" height="380" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+  </section>
 
 </main>
 
-<script src="script.js"></script>
+<div id="messageBox" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+<script src="script.js" defer></script>
 </body>
 </html>
