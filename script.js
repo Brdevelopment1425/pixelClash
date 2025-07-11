@@ -1,13 +1,13 @@
 // Yüklenme ekranını gizleme fonksiyonu
 function hideLoadingScreen() {
-  const loadingScreen = document.getElementById('loadingScreen');
+  const loader = document.getElementById('loader');
   if (!loadingScreen) return;
 
-  loadingScreen.style.transition = 'opacity 0.5s ease';
-  loadingScreen.style.opacity = '0';
+  loader.style.transition = 'opacity 0.5s ease';
+  loader.style.opacity = '0';
 
   setTimeout(() => {
-    loadingScreen.style.display = 'none';
+    loader.style.display = 'none';
   }, 500);
 }
 
