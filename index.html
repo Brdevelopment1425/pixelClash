@@ -43,6 +43,33 @@
       <input type="text" id="commentAuthor" placeholder="İsminiz" required />
       <textarea id="commentInput" placeholder="Yorumunuzu yazın..." required></textarea>
       <button type="submit">Gönder</button>
+      <!-- Honeypot alanı (gizli) -->
+<input type="text" id="hpField" name="hpField" style="display:none" autocomplete="off" tabindex="-1" />
+
+<!-- Captcha alanı -->
+<div id="captchaContainer">
+  <label id="captchaQuestion" for="captchaInput"></label>
+  <input type="text" id="captchaInput" name="captchaInput" autocomplete="off" required />
+</div>
+
+<!-- Mesaj kutusu -->
+<div id="messageBox" style="
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 204, 102, 0.9);
+  color: #000;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 10000;
+"></div>
+
     </form>
     <div id="commentsList"></div>
   </section>
@@ -53,6 +80,33 @@
       <input type="text" id="suggestionAuthor" placeholder="İsminiz" required />
       <textarea id="suggestionInput" placeholder="Önerinizi yazın..." required></textarea>
       <button type="submit">Gönder</button>
+      <!-- Honeypot alanı (gizli) -->
+<input type="text" id="hpField" name="hpField" style="display:none" autocomplete="off" tabindex="-1" />
+
+<!-- Captcha alanı -->
+<div id="captchaContainer">
+  <label id="captchaQuestion" for="captchaInput"></label>
+  <input type="text" id="captchaInput" name="captchaInput" autocomplete="off" required />
+</div>
+
+<!-- Mesaj kutusu -->
+<div id="messageBox" style="
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 204, 102, 0.9);
+  color: #000;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 10000;
+"></div>
+
     </form>
     <div id="suggestionsList"></div>
   </section>
