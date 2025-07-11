@@ -1,9 +1,16 @@
 // script.js - Giriş, Yorum, Öneri, Zoom ve Menü İşlemleri
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Loader gizle
+  window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  setTimeout(() => loader.style.display = "none", 1000);
+  if (loader) {
+    loader.classList.add("hidden"); // gizle
+    // istersen 500ms sonra tamamen kaldır:
+    setTimeout(() => {
+      if(loader.parentNode) loader.parentNode.removeChild(loader);
+    }, 500);
+  }
+});
 
   // DOM Elemanları
   const loginBtn = document.getElementById("login-btn");
