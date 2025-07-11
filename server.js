@@ -2,6 +2,8 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const rateLimit = require("express-rate-limit");
+const path = require('path');
+
 const app = express();
 
 app.use(express.json());
