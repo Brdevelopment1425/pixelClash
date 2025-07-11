@@ -37,19 +37,24 @@
     </nav>
   </header>
 
-  <!-- Giriş formu -->
-  <div id="login-container" class="hidden">
-    <h2>Admin Giriş</h2>
-    <form id="login-form">
-      <input type="email" id="email" placeholder="E-posta" required />
-      <button type="submit">Kod Gönder</button>
+  <!-- Giriş Formu -->
+<div id="login-popup" class="login-container" style="display:none;">
+  <div class="login-box">
+    <h2>Admin Girişi</h2>
+    <form id="email-form">
+      <input type="email" id="login-email" placeholder="E-posta adresiniz" required />
+      <button type="submit">Kodu Gönder</button>
     </form>
-    <form id="verify-form" class="hidden">
-      <input type="text" id="code" placeholder="Kod" maxlength="6" required />
-      <button type="submit">Doğrula</button>
+
+    <form id="code-form" style="display:none;">
+      <input type="text" id="login-code" placeholder="Gelen kodu girin" maxlength="6" required />
+      <button type="submit">Giriş Yap</button>
     </form>
-    <p id="login-message"></p>
+    <button id="close-login">İptal</button>
   </div>
+</div>
+
+      
 
   <!-- Ana İçerik -->
   <main>
