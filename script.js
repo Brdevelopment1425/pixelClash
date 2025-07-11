@@ -1,3 +1,21 @@
+// Yüklenme ekranını gizleme fonksiyonu
+function hideLoadingScreen() {
+  const loadingScreen = document.getElementById('loadingScreen');
+  if (!loadingScreen) return;
+
+  loadingScreen.style.transition = 'opacity 0.5s ease';
+  loadingScreen.style.opacity = '0';
+
+  setTimeout(() => {
+    loadingScreen.style.display = 'none';
+  }, 500);
+}
+
+// Sayfa tamamen yüklendiğinde yüklenme ekranını gizle
+window.addEventListener('load', () => {
+  hideLoadingScreen();
+});
+
 // Gelişmiş kötü kelime filtresi (Türkçe + İngilizce + yaygın hakaret/spam)
 const badWords = [
   "ananı", "amcık", "amına", "amcığı", "piç", "orospu", "orospu çocuğu", "sürtük",
