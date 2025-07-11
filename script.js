@@ -1,4 +1,31 @@
 // script.js
+document.getElementById("comment-form")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const ad = document.getElementById("comment-name").value.trim();
+  const mesaj = document.getElementById("comment-text").value.trim();
+  if (ad && mesaj) {
+    const res = await fetch("/add-comment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ad, mesaj }),
+    });
+    if (res.ok) alert("Yorum kaydedildi!");
+  }
+});
+
+document.getElementById("suggestion-form")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const ad = document.getElementById("suggestion-name").value.trim();
+  const mesaj = document.getElementById("suggestion-text").value.trim();
+  if (ad && mesaj) {
+    const res = await fetch("/add-suggestion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ad, mesaj }),
+    });
+    if (res.ok) alert("Öneri kaydedildi!");
+  }
+});
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
