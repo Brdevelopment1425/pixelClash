@@ -1,111 +1,139 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pixel Clash - Admin Giriş</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pixel Clash - Ülke Önizleme & Giriş</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+<!-- Loader -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
 
-  
-
+<!-- Menü -->
+<header>
   <nav class="navbar">
-    <div class="logo">AZE-PPF</div>
+    <div class="logo">Pixel Clash</div>
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="hamburger">&#9776;</label>
     <ul class="nav-links">
-      <li><a href="#map">Harita</a></li>
-      <li><a href="#about">Hakkında</a></li>
+      <li><a href="#preview">Önizleme</a></li>
       <li><a href="#comments">Yorumlar</a></li>
       <li><a href="#suggestions">Öneriler</a></li>
+      <li><a href="#about">Hakkında</a></li>
       <li><a href="#support">Destek</a></li>
-    </ul>
-
-    <div id="user-area">
-      <button id="login-btn">Giriş Yap</button>
-      <div id="user-menu" class="hidden">
-        <img src="https://www.svgrepo.com/show/382106/user-profile.svg" alt="Profil" />
-        <span id="user-email"></span>
-        <ul>
-          <li><a href="#" id="admin-panel-link">Admin Panel</a></li>
+      <li id="login-menu"><a href="#" id="login-btn">Giriş Yap</a></li>
+      <li id="profile-menu" style="display:none;">
+        <div class="profile" id="profile-btn">
+          <img src="" alt="Profil" id="profile-pic" />
+          <span id="profile-name"></span> ▼
+        </div>
+        <ul class="profile-dropdown" id="profile-dropdown">
           <li><a href="#" id="logout-btn">Çıkış Yap</a></li>
+          <li><a href="#" id="admin-panel-btn" style="display:none;">Admin Panel</a></li>
         </ul>
-      </div>
-    </div>
+      </li>
+    </ul>
   </nav>
+</header>
 
-  <!-- Giriş Modal -->
-  <div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-      <h2>Admin Gmail ile Giriş</h2>
-      <form id="email-form">
-        <input type="email" id="email-input" placeholder="Gmail adresinizi girin" required />
-        <button type="submit">Kod Gönder</button>
-      </form>
-      <form id="code-form" class="hidden">
-        <input type="text" id="code-input" placeholder="6 haneli kodu girin" maxlength="6" required />
-        <button type="submit">Giriş Yap</button>
-      </form>
-      <button id="close-login">Kapat</button>
-      <p id="login-message"></p>
-    </div>
-  </div>
+<!-- Ana İçerik -->
+<main>
 
-  <main>
-    <!-- Harita -->
-    <section id="map" class="section-container">
-      <h1>Ülke Haritası</h1>
-      <div class="map-container">
-        <img src="AZEPPF-1.png" id="country-img" alt="Harita" />
-      </div>
+  <!-- Ülke Önizleme -->
+  <section id="preview" class="container">
+    <h2>Pixel Clash - Ülke Önizleme</h2>
+    <div class="map-container">
+      <img id="country-image" src="AZEPPF-1.png" alt="Azerbaycan Ülke Şablonu" />
       <div class="zoom-controls">
-        <button id="zoom-in">+</button>
-        <button id="zoom-out">-</button>
-        <button id="zoom-reset">Reset</button>
+        <button id="zoom-in" title="Yakınlaştır">+</button>
+        <button id="zoom-out" title="Uzaklaştır">−</button>
+        <button id="reset-zoom" title="Sıfırla">⟳</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Hakkında -->
-    <section id="about" class="section-container">
-      <h2>Hakkımızda</h2>
-      <p>Yeni kurulan bir ülkeyiz. Dostlarımız: Türkiye, Suriye. Siz olmadan biz tekiz.</p>
-    </section>
+  <!-- Yorumlar -->
+  <section id="comments" class="container">
+    <h2>Yorumlar</h2>
+    <form id="comment-form">
+      <input type="text" id="comment-name" placeholder="Adınız" required maxlength="30" />
+      <textarea id="comment-text" placeholder="Yorumunuz..." required maxlength="300"></textarea>
+      <button type="submit">Gönder</button>
+    </form>
+    <div id="comment-list"></div>
+  </section>
 
-    <!-- Yorumlar -->
-    <section id="comments" class="section-container">
-      <h2>Yorumlar</h2>
-      <form id="comment-form">
-        <input type="text" id="comment-name" placeholder="Adınız" required />
-        <textarea id="comment-text" placeholder="Yorumunuz..." required></textarea>
-        <button type="submit">Gönder</button>
-      </form>
-      <div id="comments-list"></div>
-    </section>
+  <!-- Öneriler -->
+  <section id="suggestions" class="container">
+    <h2>Öneriler</h2>
+    <form id="suggestion-form">
+      <input type="text" id="suggestion-name" placeholder="Adınız" required maxlength="30" />
+      <textarea id="suggestion-text" placeholder="Öneriniz..." required maxlength="500"></textarea>
+      <button type="submit">Gönder</button>
+    </form>
+    <div id="suggestion-list"></div>
+  </section>
 
-    <!-- Öneriler -->
-    <section id="suggestions" class="section-container">
-      <h2>Öneriler</h2>
-      <form id="suggestion-form">
-        <input type="text" id="suggestion-name" placeholder="Adınız" required />
-        <textarea id="suggestion-text" placeholder="Öneriniz..." required></textarea>
-        <button type="submit">Gönder</button>
-      </form>
-      <div id="suggestions-list"></div>
-    </section>
+  <!-- Hakkında -->
+  <section id="about" class="container">
+    <h2>Hakkında</h2>
+    <p>
+      Yeni kurulan bir ülke Azerbaycan.<br/>
+      Dostları: Suriye, Türkiye.<br/>
+      "Siz olmadan biz tekiz."<br/>
+      Pixel Clash dünyasında birlikte güçlüyüz.
+    </p>
+  </section>
 
-    <!-- Discord Destek -->
-    <section id="support" class="section-container">
-      <h2>Discord Destek</h2>
-      <iframe src="https://discord.com/widget?id=105181377969304449&theme=dark"
-              width="100%" height="400"
-              allowtransparency="true"
-              sandbox="allow-popups allow-same-origin allow-scripts">
-      </iframe>
-    </section>
-  </main>
+  <!-- Destek Sunucusu -->
+  <section id="support" class="container">
+    <h2>Destek Sunucusu</h2>
+    <iframe 
+      src="https://discord.com/widget?id=1032127370739873856&theme=dark" 
+      width="100%" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+    </iframe>
+    <p>Discord destek sunucumuza katılmak için <a href="https://discord.gg/C3pJ4PCT" target="_blank" rel="noopener">tıklayın</a>.</p>
+  </section>
 
-  <div id="messageBox"></div>
+</main>
 
+<!-- Yükleme Ekranı -->
+<style>
+  #loader {
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  #loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .spinner {
+    border: 6px solid #eee;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+</style>
+
+<script src="script.js"></script>
 </body>
 </html>
