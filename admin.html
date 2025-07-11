@@ -1,0 +1,98 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - Pixel Clash</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="admin-header">
+    <h1>Admin Panel</h1>
+    <a href="/" class="btn">← Ana Sayfa</a>
+  </header>
+
+  <main class="admin-container">
+
+    <!-- Yorumlar Bölümü -->
+    <section class="admin-section">
+      <h2>Yorumlar</h2>
+      <div id="admin-comment-list">
+        <p>Yorumlar yükleniyor...</p>
+      </div>
+    </section>
+
+    <!-- Öneriler Bölümü -->
+    <section class="admin-section">
+      <h2>Öneriler</h2>
+      <div id="admin-suggestion-list">
+        <p>Öneriler yükleniyor...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Sahte veriler (gerçek projede backend'den çekilir)
+    const yorumlar = [
+      { id: 1, ad: "Ahmet", mesaj: "Harika bir site!" },
+      { id: 2, ad: "Zeynep", mesaj: "Daha fazla ülke ekleyin." }
+    ];
+
+    const oneriler = [
+      { id: 1, ad: "Mert", mesaj: "Yeni bir Discord odası olsun." },
+      { id: 2, ad: "Ayşe", mesaj: "Geceleri karanlık tema eklensin." }
+    ];
+
+    function loadAdminLists() {
+      const yorumAlan = document.getElementById("admin-comment-list");
+      const öneriAlan = document.getElementById("admin-suggestion-list");
+
+      yorumAlan.innerHTML = "";
+      yorumlar.forEach(y => {
+        const div = document.createElement("div");
+        div.className = "admin-card";
+        div.innerHTML = `
+          <strong>${y.ad}</strong><br/>
+          <span>${y.mesaj}</span>
+          <button onclick="silYorum(${y.id})">Sil</button>
+        `;
+        yorumAlan.appendChild(div);
+      });
+
+      öneriAlan.innerHTML = "";
+      oneriler.forEach(o => {
+        const div = document.createElement("div");
+        div.className = "admin-card";
+        div.innerHTML = `
+          <strong>${o.ad}</strong><br/>
+          <span>${o.mesaj}</span>
+          <button onclick="silOneri(${o.id})">Sil</button>
+        `;
+        öneriAlan.appendChild(div);
+      });
+    }
+
+    function silYorum(id) {
+      const index = yorumlar.findIndex(y => y.id === id);
+      if (index > -1) {
+        yorumlar.splice(index, 1);
+        loadAdminLists();
+      }
+    }
+
+    function silOneri(id) {
+      const index = oneriler.findIndex(o => o.id === id);
+      if (index > -1) {
+        oneriler.splice(index, 1);
+        loadAdminLists();
+      }
+    }
+
+    window.onload = loadAdminLists;
+  </script>
+
+</body>
+</html>
