@@ -1,15 +1,18 @@
 // script.js
 
-// Loader gizleme & içerik gösterme
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  if (loader) {
-    loader.classList.add("hidden");
-    setTimeout(() => {
-      loader.remove();
-    }, 600);
-  }
+  // 3 saniye bekle
+  setTimeout(() => {
+    if (loader) {
+      loader.classList.add("hidden");
+      setTimeout(() => {
+        loader.remove();
+      }, 600); // opacity geçişi için 600ms bekle
+    }
+  }, 3000); // 3000ms = 3 saniye
 });
+
 
 // Menü açma/kapama için checkbox zaten var, ekstra js gerekmez.
 
