@@ -2,98 +2,59 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🇦🇿 Pixel Clash: Azerbaycan Devleti</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azerbaycan PPF - İzleme & Yorum Sistemi</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="loader"><div class="spinner"></div><h1>AZE PPF</h1></div>
 
-<!-- Loader -->
-<div id="loader">Yükleniyor...</div>
-
-<header>
-  <h1>🇦🇿 Pixel Clash: Azerbaycan Devleti</h1>
-
-  <nav class="desktop-nav" aria-label="Ana menü">
-    <button data-target="about" aria-pressed="false" onclick="scrollToSection('about')">Hakkında</button>
-    <button data-target="map" aria-pressed="false" onclick="scrollToSection('map')">Harita</button>
-    <button data-target="template" aria-pressed="false" onclick="scrollToSection('template')">Şablon</button>
-    <button data-target="comments" aria-pressed="false" onclick="scrollToSection('comments')">Yorumlar</button>
-  </nav>
-
-  <div class="hamburger" aria-label="Menüyü aç/kapat" role="button" tabindex="0" aria-expanded="false">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <nav class="mobile-nav" aria-label="Mobil menü">
-    <button data-target="about" aria-pressed="false" onclick="scrollToSection('about')">Hakkında</button>
-    <button data-target="map" aria-pressed="false" onclick="scrollToSection('map')">Harita</button>
-    <button data-target="template" aria-pressed="false" onclick="scrollToSection('template')">Şablon</button>
-    <button data-target="comments" aria-pressed="false" onclick="scrollToSection('comments')">Yorumlar</button>
-  </nav>
-</header>
-
-<main>
-  <section id="about" tabindex="0" aria-label="Hakkında bölümü">
-    <h2>📝 Hakkında</h2>
-    <p>
-      Yeni kurulan bir ülke: Azerbaycan<br />
-      Dostları:
-    </p>
+  <nav class="desktop-nav">
     <ul>
-      <li>Suriye</li>
-      <li>Türkiye</li>
+      <li><a href="#map">Harita</a></li>
+      <li><a href="#comments">Yorumlar</a></li>
+      <li><a href="#suggestions">Öneriler</a></li>
+      <li><a href="#about">Hakkında</a></li>
     </ul>
-    <p><em>"Siz olmadan biz tekiz."</em></p>
-  </section>
+  </nav>
 
-  <section id="map" tabindex="0" aria-label="Canlı harita bölümü">
-    <h2>🌍 Canlı Harita Konumu</h2>
-    <iframe src="https://pixelclash.fun/#d,8825,-8315,26" title="Pixel Clash Azerbaycan Haritası"></iframe>
-    <a href="https://pixelclash.fun/#d,8825,-8315,26" target="_blank" rel="noopener noreferrer" class="btn" role="button" aria-label="Canlı haritayı yeni sekmede aç">Canlı Haritayı Aç</a>
-  </section>
-
-  <section id="template" tabindex="0" aria-label="Ülke şablonu bölümü">
-    <h2>🖼️ Azerbaycan Ülke Şablonu (Zoom & Sürükle)</h2>
-    <div class="zoom-container" id="zoomContainer">
-      <img src="AZEPPF-1.png" alt="Azerbaycan Şablon Haritası" class="zoom-image" id="zoomImg" draggable="false" />
+  <section id="map">
+    <h2>Ülke Haritası</h2>
+    <div id="zoomContainer">
+      <img src="AZEPPF-1.png" id="zoomImg" alt="Azerbaycan PPF Harita Önizleme" />
     </div>
   </section>
 
-  <section id="comments" tabindex="0" aria-label="Yorumlar bölümü">
-    <h2>💬 Yorumlar</h2>
-    <div id="commentsList" aria-live="polite" aria-relevant="additions"></div>
-    <form id="commentForm" aria-label="Yorum ekleme formu">
-      <input
-        type="text"
-        id="commentAuthor"
-        placeholder="İsminiz"
-        required
-        aria-required="true"
-      />
-      <textarea
-        id="commentInput"
-        placeholder="Yorumunuzu buraya yazın..."
-        required
-        aria-required="true"
-      ></textarea>
+  <section id="comments">
+    <h2>💬 Ziyaretçi Yorumları</h2>
+    <form id="commentForm">
+      <input type="text" id="commentAuthor" placeholder="İsminiz" required />
+      <textarea id="commentInput" placeholder="Yorumunuzu yazın..." required></textarea>
       <button type="submit">Gönder</button>
-      <small>Yorumlar local cihazınızda saklanır.</small>
     </form>
+    <div id="commentsList"></div>
   </section>
-</main>
 
-<div id="discordSupport" aria-label="Discord destek sunucusu">
-  <iframe
-    src="https://discord.com/widget?id=984848660142726982&theme=dark"
-    allowtransparency="true"
-    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-    title="Discord Destek Sunucusu"
-  ></iframe>
-</div>
+  <section id="suggestions">
+    <h2>💡 Öneri Gönder</h2>
+    <form id="suggestionForm">
+      <input type="text" id="suggestionAuthor" placeholder="İsminiz" required />
+      <textarea id="suggestionInput" placeholder="Önerinizi yazın..." required></textarea>
+      <button type="submit">Gönder</button>
+    </form>
+    <div id="suggestionsList"></div>
+  </section>
 
-<script src="script.js"></script>
+  <section id="about">
+    <h2>🇦🇿 Hakkında</h2>
+    <p>Yeni kurulan bir ülke. <strong>Dostları: Türkiye, Suriye</strong>. Siz olmadan biz tekiz.</p>
+  </section>
 
+  <div id="discordSupport">
+    <iframe src="https://discord.com/widget?id=984848660142726982&theme=dark"
+      allowtransparency="true" sandbox="allow-popups allow-same-origin allow-scripts"></iframe>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
