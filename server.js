@@ -7,6 +7,34 @@ const path = require("path");
 const app = express();
 app.use(express.static(__dirname));
 app.use(express.json());
+const fs = require("fs");
+
+// JSON dosyasına veri ekleyen yardımcı fonksiyon
+function appendToJSONFile(filename, newItem) {
+  const filePath = path.join(__dirname, filename);
+  const data = fs.existsSync(filePath)
+    ? JSON.parse(fs.readFileSync(filePath, "utf8"))
+    : [];
+  newItem.id = Date.now();
+  data.push(newItem);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+
+// Yorum ekle
+app.post("/add-comment", (req, res) => {
+  const { ad, mesaj } = req.body;
+  if (!ad || !mesaj) return res.status(400).send("Eksik veri.");
+  appendToJSONFile("yorumlar.json", { ad, mesaj });
+  res.status(200).send("Yorum kaydedildi.");
+});
+
+// Öneri ekle
+app.post("/add-suggestion", (req, res) => {
+  const { ad, mesaj } = req.body;
+  if (!ad || !mesaj) return res.status(400).send("Eksik veri.");
+  appendToJSONFile("oneriler.json", { ad, mesaj });
+  res.status(200).send("Öneri kaydedildi.");
+});
 
 const PORT = process.env.PORT || 3000;
 
