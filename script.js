@@ -1,23 +1,51 @@
-// Yüklenme ekranını gizleme fonksiyonu (id: loader)
+// --- Yüklenme ekranı ---
 function hideLoader() {
   const loader = document.getElementById('loader');
   if (!loader) return;
-
   loader.style.transition = 'opacity 0.5s ease';
   loader.style.opacity = '0';
-
   setTimeout(() => {
     loader.style.display = 'none';
   }, 500);
 }
 
-// Sayfa tamamen yüklendiğinde loader'ı gizle
 window.addEventListener('load', () => {
   hideLoader();
 });
 
+// --- Navbar hamburger ve dropdown ---
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+const dropdown = document.querySelector('.dropdown');
+const dropdownContent = document.querySelector('.dropdown-content');
+const dropbtn = document.querySelector('.dropbtn');
 
-// Gelişmiş kötü kelime filtresi (Türkçe + İngilizce + yaygın hakaret/spam)
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+// Mobilde dropdown tıklamayla açılır
+dropbtn.addEventListener('click', e => {
+  if (window.innerWidth <= 768) {
+    e.preventDefault();
+    dropdownContent.classList.toggle('active');
+  }
+});
+
+// --- Zoom butonu ---
+const zoomImg = document.getElementById('zoomImg');
+const zoomBtn = document.getElementById('zoomBtn');
+
+zoomBtn.addEventListener('click', () => {
+  zoomImg.classList.toggle('zoomed');
+  zoomBtn.textContent = zoomImg.classList.contains('zoomed') ? 'Uzaklaştır' : 'Yakınlaştır';
+});
+zoomImg.addEventListener('click', () => {
+  zoomImg.classList.toggle('zoomed');
+  zoomBtn.textContent = zoomImg.classList.contains('zoomed') ? 'Uzaklaştır' : 'Yakınlaştır';
+});
+
+// --- Kötü kelime filtresi ---
 const badWords = [
   "ananı", "amcık", "amına", "amcığı", "piç", "orospu", "orospu çocuğu", "sürtük",
   "yarrağım", "yarak", "kahpe", "şerefsiz", "göt", "götveren",
@@ -42,12 +70,9 @@ let lastSubmitTime = 0;
 const submittedComments = new Set();
 const submittedSuggestions = new Set();
 
-// IP kara liste simülasyonu (localStorage)
-const ipBlacklistKey = 'ipBlacklist';
-const userIP = 'localDummyIP'; // Gerçek IP backend ile alınmalı
-
-// Honeypot bot tuzağı alanı
-const honeypotField = document.getElementById('hpField');
+// Honeypot bot tuzağı alanları
+const honeypotFieldComment = document.getElementById('hpField');
+const honeypotFieldSuggestion = document.getElementById('hpFieldSuggestion');
 
 // DOM elemanları
 const commentsList = document.getElementById('commentsList');
@@ -90,6 +115,17 @@ function generateCaptcha() {
 }
 generateCaptcha();
 
+const captchaQuestionSuggestion = document.getElementById('captchaQuestionSuggestion');
+const captchaInputSuggestion = document.getElementById('captchaInputSuggestion');
+let captchaAnswerSuggestion = 0;
+function generateCaptchaSuggestion() {
+  const a = Math.floor(Math.random() * 10) + 1;
+  const b = Math.floor(Math.random() * 10) + 1;
+  captchaAnswerSuggestion = a + b;
+  captchaQuestionSuggestion.textContent = `Lütfen ${a} + ${b} işleminin sonucunu yazın:`;
+}
+generateCaptchaSuggestion();
+
 // Rate limit kontrol
 function canSubmit() {
   return Date.now() - lastSubmitTime > RATE_LIMIT_MS;
@@ -105,152 +141,144 @@ function addDuplicate(containerSet, name, text) {
   containerSet.add(key);
 }
 
-// IP kara liste kontrolü
-function isIPBlacklisted(ip) {
-  const blacklist = JSON.parse(localStorage.getItem(ipBlacklistKey)) || [];
-  return blacklist.includes(ip);
-}
-function blacklistIP(ip) {
-  const blacklist = JSON.parse(localStorage.getItem(ipBlacklistKey)) || [];
-  if (!blacklist.includes(ip)) {
-    blacklist.push(ip);
-    localStorage.setItem(ipBlacklistKey, JSON.stringify(blacklist));
-  }
-}
-
 // Mesaj gösterme animasyonu
 function showMessage(text, isError = false) {
   if (!messageBox) return;
   messageBox.textContent = text;
-  messageBox.style.color = isError ? '#ff5555' : '#55ff55';
+  messageBox.style.backgroundColor = isError ? '#b33' : '#393';
   messageBox.style.opacity = '1';
+  messageBox.style.pointerEvents = 'auto';
   setTimeout(() => {
     messageBox.style.opacity = '0';
+    messageBox.style.pointerEvents = 'none';
   }, 4000);
 }
 
-// Buton kilitleme ve animasyon
-function disableButtons(seconds = 30) {
-  submitButtons.forEach(btn => {
-    btn.disabled = true;
-    btn.style.opacity = '0.5';
-    btn.style.cursor = 'not-allowed';
-  });
-  setTimeout(() => {
-    submitButtons.forEach(btn => {
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.style.cursor = 'pointer';
-    });
-  }, seconds * 1000);
+// Yorum ekleme fonksiyonu
+function addComment(name, text) {
+  const div = document.createElement('div');
+  div.innerHTML = `<strong>${escapeHtml(name)}</strong>: ${escapeHtml(text)}`;
+  commentsList.prepend(div);
 }
 
-// Form gönderme ortak fonksiyonu
-function handleSubmit(event, containerSet, containerElement, nameInput, textInput, formType) {
-  event.preventDefault();
+// Öneri ekleme fonksiyonu
+function addSuggestion(name, text) {
+  const div = document.createElement('div');
+  div.innerHTML = `<strong>${escapeHtml(name)}</strong>: ${escapeHtml(text)}`;
+  suggestionsList.prepend(div);
+}
 
-  // Honeypot kontrolü
-  if (honeypotField.value.trim() !== '') {
-    showMessage('Bot tespit edildi, işlem engellendi!', true);
+// HTML escape fonksiyonu
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Form submit eventleri
+commentForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  // Honeypot kontrol
+  if (honeypotFieldComment.value.trim() !== '') {
+    showMessage('Bot işlemi tespit edildi.', true);
     return;
   }
 
-  // Rate limit
-  if (!canSubmit()) {
-    showMessage('Lütfen 1 dakika bekleyip tekrar deneyin.', true);
+  const name = commentNameInput.value.trim();
+  const text = commentTextInput.value.trim();
+  const captchaVal = parseInt(captchaInput.value.trim(), 10);
+
+  if (!name || !text) {
+    showMessage('Lütfen isim ve yorum alanlarını doldurun.', true);
     return;
   }
 
-  // Alan boşlukları
-  const name = nameInput.value.trim();
-  const text = textInput.value.trim();
-  const captcha = captchaInput.value.trim();
-
-  if (!name || !text || !captcha) {
-    showMessage('Lütfen tüm alanları doldurun.', true);
-    return;
-  }
-
-  // Güvenlik kontrolü
   if (!isCleanInput(name) || !isCleanInput(text)) {
-    showMessage('Güvenli olmayan karakterler tespit edildi.', true);
+    showMessage('Geçersiz karakterler veya kod içeriyor.', true);
     return;
   }
 
-  // Küfür ve kötü kelime kontrolü
   if (containsBadWords(name) || containsBadWords(text)) {
-    showMessage('Uygunsuz kelimeler içeriyor.', true);
+    showMessage('Uygunsuz kelime içeriyor.', true);
     return;
   }
 
-  // Uzunluk kontrolü
-  if (name.length > 30) {
-    showMessage('İsim en fazla 30 karakter olabilir.', true);
-    return;
-  }
-  if (text.length > 300) {
-    showMessage(`${formType} en fazla 300 karakter olabilir.`, true);
-    return;
-  }
-
-  // Duplicate kontrol
-  if (isDuplicate(containerSet, name, text)) {
-    showMessage('Aynı içerik daha önce gönderildi.', true);
-    return;
-  }
-
-  // Captcha kontrolü
-  if (parseInt(captcha) !== captchaAnswer) {
-    showMessage('Captcha doğrulaması başarısız.', true);
+  if (captchaVal !== captchaAnswer) {
+    showMessage('Captcha hatalı.', true);
     generateCaptcha();
     return;
   }
 
-  // IP kara liste kontrolü
-  if (isIPBlacklisted(userIP)) {
-    showMessage('IP adresiniz engellenmiştir.', true);
+  if (!canSubmit()) {
+    showMessage('Lütfen 1 dakika bekleyin.', true);
     return;
   }
 
-  // Başarılı gönderim
-  lastSubmitTime = Date.now();
-  addDuplicate(containerSet, name, text);
+  if (isDuplicate(submittedComments, name, text)) {
+    showMessage('Aynı yorumu tekrar gönderemezsiniz.', true);
+    return;
+  }
 
-  // Yeni yorum/öneri elemanı oluştur
-  const div = document.createElement('div');
-  div.classList.add(formType === 'Yorum' ? 'comment' : 'suggestion');
-  div.textContent = `${name}: ${text}`;
-  containerElement.prepend(div);
+  addComment(name, text);
+  addDuplicate(submittedComments, name, text);
 
-  showMessage(`${formType} başarıyla gönderildi!`);
-
-  // Formu temizle
-  nameInput.value = '';
-  textInput.value = '';
-  captchaInput.value = '';
+  commentForm.reset();
   generateCaptcha();
+  lastSubmitTime = Date.now();
 
-  // Butonları 30 saniye kilitle
-  disableButtons(30);
-}
-
-// Event listenerlar
-commentForm.addEventListener('submit', e => {
-  handleSubmit(e, submittedComments, commentsList, commentNameInput, commentTextInput, 'Yorum');
+  showMessage('Yorumunuz başarıyla eklendi!');
 });
+
 suggestionForm.addEventListener('submit', e => {
-  handleSubmit(e, submittedSuggestions, suggestionsList, suggestionNameInput, suggestionTextInput, 'Öneri');
-});
+  e.preventDefault();
 
-// Zoom fonksiyonları (harita resmi)
-const zoomImg = document.getElementById('zoomImg');
-const zoomBtn = document.getElementById('zoomBtn');
+  if (honeypotFieldSuggestion.value.trim() !== '') {
+    showMessage('Bot işlemi tespit edildi.', true);
+    return;
+  }
 
-zoomBtn.addEventListener('click', () => {
-  zoomImg.classList.toggle('zoomed');
-  zoomBtn.textContent = zoomImg.classList.contains('zoomed') ? 'Uzaklaştır' : 'Yakınlaştır';
-});
-zoomImg.addEventListener('click', () => {
-  zoomImg.classList.toggle('zoomed');
-  zoomBtn.textContent = zoomImg.classList.contains('zoomed') ? 'Uzaklaştır' : 'Yakınlaştır';
+  const name = suggestionNameInput.value.trim();
+  const text = suggestionTextInput.value.trim();
+  const captchaVal = parseInt(captchaInputSuggestion.value.trim(), 10);
+
+  if (!name || !text) {
+    showMessage('Lütfen isim ve öneri alanlarını doldurun.', true);
+    return;
+  }
+
+  if (!isCleanInput(name) || !isCleanInput(text)) {
+    showMessage('Geçersiz karakterler veya kod içeriyor.', true);
+    return;
+  }
+
+  if (containsBadWords(name) || containsBadWords(text)) {
+    showMessage('Uygunsuz kelime içeriyor.', true);
+    return;
+  }
+
+  if (captchaVal !== captchaAnswerSuggestion) {
+    showMessage('Captcha hatalı.', true);
+    generateCaptchaSuggestion();
+    return;
+  }
+
+  if (!canSubmit()) {
+    showMessage('Lütfen 1 dakika bekleyin.', true);
+    return;
+  }
+
+  if (isDuplicate(submittedSuggestions, name, text)) {
+    showMessage('Aynı öneriyi tekrar gönderemezsiniz.', true);
+    return;
+  }
+
+  addSuggestion(name, text);
+  addDuplicate(submittedSuggestions, name, text);
+
+  suggestionForm.reset();
+  generateCaptchaSuggestion();
+  lastSubmitTime = Date.now();
+
+  showMessage('Öneriniz başarıyla eklendi!');
 });
