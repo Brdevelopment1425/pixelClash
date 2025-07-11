@@ -2,105 +2,119 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pixel Clash - Ülke Önizleme & Giriş</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pixel Clash - Ülke Önizleme & Giriş</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Yükleme ekranı -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Yükleniyor...</p>
+  </div>
 
+  <!-- Menü -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">Pixel Clash</div>
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" class="hamburger">&#9776;</label>
+      <ul class="nav-links">
+        <li><a href="#preview">Önizleme</a></li>
+        <li><a href="#comments">Yorumlar</a></li>
+        <li><a href="#suggestions">Öneriler</a></li>
+        <li><a href="#about">Hakkında</a></li>
+        <li><a href="#support">Destek</a></li>
+        <li id="login-menu"><a href="#" id="login-btn">Giriş Yap</a></li>
+        <li id="profile-menu" style="display:none;">
+          <div class="profile" id="profile-btn">
+            <img src="" alt="Profil" id="profile-pic" />
+            <span id="profile-name"></span> ▼
+          </div>
+          <ul class="profile-dropdown" id="profile-dropdown">
+            <li><a href="#" id="logout-btn">Çıkış Yap</a></li>
+            <li><a href="/admin" id="admin-panel-btn">Admin Panel</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
+  <!-- Giriş formu -->
+  <div id="login-container" class="hidden">
+    <h2>Admin Giriş</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="E-posta" required />
+      <button type="submit">Kod Gönder</button>
+    </form>
+    <form id="verify-form" class="hidden">
+      <input type="text" id="code" placeholder="Kod" maxlength="6" required />
+      <button type="submit">Doğrula</button>
+    </form>
+    <p id="login-message"></p>
+  </div>
 
-<!-- Menü -->
-<header>
-  <nav class="navbar">
-    <div class="logo">Pixel Clash</div>
-    <input type="checkbox" id="menu-toggle" />
-    <label for="menu-toggle" class="hamburger">&#9776;</label>
-    <ul class="nav-links">
-      <li><a href="#preview">Önizleme</a></li>
-      <li><a href="#comments">Yorumlar</a></li>
-      <li><a href="#suggestions">Öneriler</a></li>
-      <li><a href="#about">Hakkında</a></li>
-      <li><a href="#support">Destek</a></li>
-      <li id="login-menu"><a href="#" id="login-btn">Giriş Yap</a></li>
-      <li id="profile-menu" style="display:none;">
-        <div class="profile" id="profile-btn">
-          <img src="" alt="Profil" id="profile-pic" />
-          <span id="profile-name"></span> ▼
+  <!-- Ana İçerik -->
+  <main>
+    <!-- Önizleme -->
+    <section id="preview" class="container">
+      <h2>Pixel Clash - Ülke Önizleme</h2>
+      <div class="map-container">
+        <img id="country-image" src="AZEPPF-1.png" alt="Azerbaycan Ülke Şablonu" />
+        <div class="zoom-controls">
+          <button id="zoom-in">+</button>
+          <button id="zoom-out">−</button>
+          <button id="reset-zoom">⟳</button>
         </div>
-        <ul class="profile-dropdown" id="profile-dropdown">
-          <li><a href="#" id="logout-btn">Çıkış Yap</a></li>
-          <li><a href="#" id="admin-panel-btn" style="display:none;">Admin Panel</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-</header>
-
-<!-- Ana İçerik -->
-<main>
-
-  <!-- Ülke Önizleme -->
-  <section id="preview" class="container">
-    <h2>Pixel Clash - Ülke Önizleme</h2>
-    <div class="map-container">
-      <img id="country-image" src="AZEPPF-1.png" alt="Azerbaycan Ülke Şablonu" />
-      <div class="zoom-controls">
-        <button id="zoom-in" title="Yakınlaştır">+</button>
-        <button id="zoom-out" title="Uzaklaştır">−</button>
-        <button id="reset-zoom" title="Sıfırla">⟳</button>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Yorumlar -->
-  <section id="comments" class="container">
-    <h2>Yorumlar</h2>
-    <form id="comment-form">
-      <input type="text" id="comment-name" placeholder="Adınız" required maxlength="30" />
-      <textarea id="comment-text" placeholder="Yorumunuz..." required maxlength="300"></textarea>
-      <button type="submit">Gönder</button>
-    </form>
-    <div id="comment-list"></div>
-  </section>
+    <!-- Yorumlar -->
+    <section id="comments" class="container">
+      <h2>Yorumlar</h2>
+      <form id="comment-form">
+        <input type="text" id="comment-name" placeholder="Adınız" required maxlength="30" />
+        <textarea id="comment-text" placeholder="Yorumunuz..." required maxlength="300"></textarea>
+        <button type="submit">Gönder</button>
+      </form>
+      <div id="comment-list"></div>
+    </section>
 
-  <!-- Öneriler -->
-  <section id="suggestions" class="container">
-    <h2>Öneriler</h2>
-    <form id="suggestion-form">
-      <input type="text" id="suggestion-name" placeholder="Adınız" required maxlength="30" />
-      <textarea id="suggestion-text" placeholder="Öneriniz..." required maxlength="500"></textarea>
-      <button type="submit">Gönder</button>
-    </form>
-    <div id="suggestion-list"></div>
-  </section>
+    <!-- Öneriler -->
+    <section id="suggestions" class="container">
+      <h2>Öneriler</h2>
+      <form id="suggestion-form">
+        <input type="text" id="suggestion-name" placeholder="Adınız" required maxlength="30" />
+        <textarea id="suggestion-text" placeholder="Öneriniz..." required maxlength="500"></textarea>
+        <button type="submit">Gönder</button>
+      </form>
+      <div id="suggestion-list"></div>
+    </section>
 
-  <!-- Hakkında -->
-  <section id="about" class="container">
-    <h2>Hakkında</h2>
-    <p>
-      Yeni kurulan bir ülke Azerbaycan.<br/>
-      Dostları: Suriye, Türkiye.<br/>
-      "Siz olmadan biz tekiz."<br/>
-      Pixel Clash dünyasında birlikte güçlüyüz.
-    </p>
-  </section>
+    <!-- Hakkında -->
+    <section id="about" class="container">
+      <h2>Hakkında</h2>
+      <p>
+        Yeni kurulan bir ülke Azerbaycan.<br/>
+        Dostları: Suriye, Türkiye.<br/>
+        "Siz olmadan biz tekiz."<br/>
+        Pixel Clash dünyasında birlikte güçlüyüz.
+      </p>
+    </section>
 
-  <!-- Destek Sunucusu -->
-  <section id="support" class="container">
-    <h2>Destek Sunucusu</h2>
-    <iframe 
-      src="https://discord.com/widget?id=1032127370739873856&theme=dark" 
-      width="100%" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-    </iframe>
-    <p>Discord destek sunucumuza katılmak için <a href="https://discord.gg/C3pJ4PCT" target="_blank" rel="noopener">tıklayın</a>.</p>
-  </section>
+    <!-- Destek -->
+    <section id="support" class="container">
+      <h2>Destek Sunucusu</h2>
+      <iframe src="https://discord.com/widget?id=1032127370739873856&theme=dark"
+              width="100%" height="400" allowtransparency="true"
+              frameborder="0"
+              sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+      </iframe>
+      <p>Discord sunucumuza katılmak için <a href="https://discord.gg/C3pJ4PCT" target="_blank">buraya tıklayın</a>.</p>
+    </section>
+  </main>
 
-</main>
-
-
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
