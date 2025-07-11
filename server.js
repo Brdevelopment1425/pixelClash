@@ -140,6 +140,9 @@ app.get("/logout", (req, res) => {
   // Basit logout işlemi, gerçek session yönetimi eklenmeli
   res.status(200).send("Çıkış yapıldı.");
 });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`✅ Pixel Clash API sunucusu çalışıyor: http://localhost:${PORT}`);
